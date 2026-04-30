@@ -1,6 +1,6 @@
-from gondola import *
+from PRODUCTOS import Producto
 
-class Verduleria (Gondola):
+class Verduleria (Producto):
 
     #productos: zanahoria, cebolla, lechuga, 
 

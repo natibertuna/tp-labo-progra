@@ -1,6 +1,6 @@
-from gondola import *
+from PRODUCTOS import Producto
 
-class Panaderia (Gondola):
+class Panaderia (Producto):
 
     #productos: miÑon, figasita,  
 

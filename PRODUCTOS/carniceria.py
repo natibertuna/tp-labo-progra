@@ -1,9 +1,9 @@
-from gondola import *
+from PRODUCTOS import Producto
 
 #IPO DE CORTE, PREC P/ KILO, PESO VENDIDO Y CALCULAR SU PRECIO
 
 
-class Carniceria (Gondola):
+class Carniceria (Producto):
 
     #productos: Vacio, Asado, Costillitas, Pechito, --> esto va en el main
 

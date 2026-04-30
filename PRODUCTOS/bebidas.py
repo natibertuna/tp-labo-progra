@@ -1,6 +1,6 @@
-from gondola import *
+from PRODUCTOS import Producto
 
-class Bebidas (Gondola):
+class Bebidas (Producto):
 
     #productos: Sprite, Cunnington, Agua, Manaos, Aquarius
 

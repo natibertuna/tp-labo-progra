@@ -1,6 +1,6 @@
-from gondola import *
+from PRODUCTOS import Producto
 
-class Galletitas (Gondola):
+class Galletitas (Producto):
 
     #productos: Toddy, Oreo Golden, Vainillas, pitusas, sonrisa, porteñitas
 
