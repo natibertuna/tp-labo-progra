@@ -10,12 +10,10 @@ from PRODUCTOS.bebidas import Bebidas
 
 #me creo 3 productos de cada gondola
 g= Gondola("verduleria")
-zanahoria = Verduleria("zanahoria",5000,"verduleria",True,"334",2,5000)
+zanahoria = Verduleria("zanahoria",5000,"verduleria",100,"334",2,5000)
 #morron= Verduleria(4500, "morron", )
 
 g.agregar_producto(zanahoria)
 
 g.mostrar_productos()
 
-print(type(zanahoria))
-print(zanahoria.__str__())
