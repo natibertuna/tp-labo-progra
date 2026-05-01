@@ -8,4 +8,6 @@ class Producto:
 
         #clase padre
 
+    def __str__(self):
+        return f"{self.marca} {self.nombre} - ${self.precio} - Disp: {self.disponibilidad}"
     

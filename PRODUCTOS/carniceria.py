@@ -1,4 +1,4 @@
-from PRODUCTOS import Producto
+from PRODUCTOS.producto import Producto
 
 #IPO DE CORTE, PREC P/ KILO, PESO VENDIDO Y CALCULAR SU PRECIO
 

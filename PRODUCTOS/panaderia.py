@@ -1,4 +1,4 @@
-from PRODUCTOS import Producto
+from PRODUCTOS.producto import Producto
 
 class Panaderia (Producto):
 

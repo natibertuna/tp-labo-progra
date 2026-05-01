@@ -19,3 +19,5 @@ class Inventario:
             producto.disponibilidad-=1
         else:
             print(f"En esta gondola no hay: {producto.nombre}")
+
+    #terminar GONDOLA antes de seguir estoo

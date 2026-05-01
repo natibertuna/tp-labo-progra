@@ -1,16 +1,14 @@
-from PRODUCTOS import Producto
+from PRODUCTOS.producto import Producto
 
-class Verduleria (Producto):
+class Verduleria(Producto):
 
-    #productos: zanahoria, cebolla, lechuga, 
+    def __init__(self, nombre, precio, marca, disponibilidad, codigo_barra, peso_vendido, precio_unidad):
+        super().__init__(nombre, precio, marca, disponibilidad, codigo_barra)
 
-    def __init__(self, precio_por_unidad, marca, stock, peso_vendido):
-        super().__init__(precio_por_unidad, marca, stock)
-        #asumo que precio por unidad es por kilo 
         self.__peso_vendido = peso_vendido
-        
-        #calculo lo que va a ir en el carrito
-        self.__precio_final = self.prec*self.__peso_vendido
+        self.__precio_unidad = precio_unidad
+
+        self.__precio_final = self.__precio_unidad * self.__peso_vendido
 
         #if self.stock==0   --> hay que agregar la condicion de llamar a deposito
         
