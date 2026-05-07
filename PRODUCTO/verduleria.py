@@ -1,11 +1,11 @@
-from gondola import *
+from PRODUCTO.producto import *
 
-class Verduleria (Gondola):
+class Verduleria (Producto):
 
     #productos: zanahoria, cebolla, lechuga, 
 
-    def __init__(self, precio_por_unidad, marca, stock, peso_vendido):
-        super().__init__(precio_por_unidad, marca, stock)
+    def __init__(self, nombre, codigo, marca, precio_por_unidad, stock, peso_vendido):
+        super().__init__(nombre, codigo, marca, precio_por_unidad, stock)
         #asumo que precio por unidad es por kilo 
         self.__peso_vendido = peso_vendido
         
