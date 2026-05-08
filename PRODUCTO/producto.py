@@ -1,6 +1,8 @@
  #clase padre
 
-class Producto:
+from abc import ABC
+
+class Producto(ABC):
     def __init__(self,nombre, codigo, marca,  precio_por_unidad, stock,umbral_min, umbral_max):
 
 
@@ -13,24 +15,6 @@ class Producto:
         self.codigo_barras= codigo
         self.umbral_min= umbral_min
         self.umbral_max=umbral_max #maxima cant de productos en gondola 
-
-       
-    def reducir_stock(self, cantidad=1):
-        
-        #Decrementa el stock cuando un cliente agrega un producto al carrito.
-        #funcion que va a ser llamada por el carrito
-        
-        if self.stock_gondola >= cantidad: 
-            self.stock_gondola -= cantidad
-            return True
-        return False
-
-    def incrementar_stock(self, cantidad):
-        
-        #Incrementa el stock tras una reposición exitosa.
-        #funcion para la reposicion o para cuando se elimina algo del carrito
-        
-        self.stock_gondola += cantidad
 
    
     def mostrar_info(self):

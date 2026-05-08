@@ -33,7 +33,7 @@ manaos= bebidas("manaos", "006", "Manaos", 1000, 10, 2 )
 
 rta=input("Desea agregar productos a su carrito? (si/no): ")
 
-if rta=="si":
+#if rta=="si":
     #llama a carrito
 
 

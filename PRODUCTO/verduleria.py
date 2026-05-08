@@ -12,5 +12,5 @@ class Verduleria (Producto):
         #calculo lo que va a ir en el carrito
         self.__precio_final = self.prec*self.__peso_vendido
 
-        #if self.stock==0   --> hay que agregar la condicion de llamar a deposito
+
         

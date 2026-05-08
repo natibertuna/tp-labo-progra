@@ -6,7 +6,9 @@ class Galletitas (Producto):
 
     def __init__(self, nombre, codigo, marca, precio_por_unidad, stock):
         super().__init__(nombre, codigo, marca, precio_por_unidad, stock)
-        self.galles = list #util para los descuentos
+      
+
+
 
         
 

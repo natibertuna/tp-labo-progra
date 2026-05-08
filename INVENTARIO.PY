@@ -1,10 +1,9 @@
-from GONDOLA import Gondola
+
 from DEPOSITO import *
 
 class Inventario:
-    def __init__(self):
-        self.gondolas = [] #lista de las gondolas
-        self.deposito = [] 
+    def __init__(self, deposito:Deposito):
+        self.deposito = deposito
     
     #def stock()
         
@@ -12,27 +11,18 @@ class Inventario:
     # de compras) para verificar si la cantidad disponible se encuentra por debajo del umbral mínimo de
     # reposición.
 
-
-    def agregar_gondola(self, gondola):
-        self.gondolas.append(gondola) #al final
-
-    def buscar_producto(self, codigo_barra):
-        for a in self.gondolas:
-            for b in a.producto:
-                if b.codigo_barra == codigo_barra:
-                    return b
-        return None
-
-    def bajar_disponibilidad(self, codigo_barra, cantidad):
-        producto = self.buscar_producto(codigo_barra)
-        if producto:
-            if producto.disponibilidad>0:
-                producto.disponibilidad-=1
+    def agregar_producto(self, producto: Producto):
+        for p in self.productos:
+            if p.codigo_barra == producto.codigo_barra:
+                print("El producto ya está en la góndola")
+                return
             else:
-                print(f"En esta gondola no hay: {producto.nombre}")
+                self.productos.append(producto)
+                print ("Se agrego correctamente a la gondola")
 
-class Pedido:
-    def __init__(self, marcaa, nombre, cantidad):
-        self.cant=cantidad
-        
-        pass
+    def verificar_stock(self):
+        self.deposito.agregar_stock()
+
+
+
+

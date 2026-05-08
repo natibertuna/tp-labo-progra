@@ -1,27 +1,12 @@
 from PRODUCTO.producto import Producto
+from INVENTARIO import *
+
 
 class Gondola:
-    def __init__(self, tipo, prod):
+    def __init__(self, tipo, prod, inv:Inventario):
         self.tipo = tipo
         self.productos = prod #lista de productos YA en la gondola
-        
-    #SACAR Y PONER EN INV
-    def agregar_producto(self, producto: Producto):
-        for p in self.productos:
-            if p.codigo_barra == producto.codigo_barra:
-                print("El producto ya está en la góndola")
-                return
-            else:
-                self.productos.append(producto)
-                print ("Se agrego correctamente a la gondola")
-
-    def eliminar_producto(self,producto, cant):
-        
-        if producto.stock_gondola - cant > producto.umbral_min:
-            producto.stock_gondola -= cant
-             #elimino un prducto de la gondola , que esa cantidad estaba en producto
-        else:
-            
+        self.inv=inv
         
     
     def buscar_producto(self, codigo_barra):
@@ -41,11 +26,9 @@ class Gondola:
         
         for a in self.productos:
             print(a)
-
-        
-
     
-    #def mostrar_productos(self):
-       # print(f"Gondola: {self.tipo}")
-       # for a in self.productos:
-          #  print(f"{a.marca} {a.nombre} - ${a.precio} - Disp: {a.disponibilidad}")
+    def reponer_inventario(self):
+        self.inv.verificar_stock()
+
+
+
