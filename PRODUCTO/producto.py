@@ -1,23 +1,29 @@
  #clase padre
 
 class Producto:
-    def __init__(self,nombre, codigo, marca,  precio_por_unidad, stock):
+    def __init__(self,nombre, codigo, marca,  precio_por_unidad, stock,umbral_min, umbral_max):
+
+
+        # umbral de stock mínimo de reposición.
+
         self.prec = precio_por_unidad
         self.nombre = nombre
         self.marca = marca
         self.stock_gondola = stock
         self.codigo_barras= codigo
+        self.umbral_min= umbral_min
+        self.umbral_max=umbral_max #maxima cant de productos en gondola 
 
        
-        def reducir_stock(self, cantidad=1):
+    def reducir_stock(self, cantidad=1):
         
-            #Decrementa el stock cuando un cliente agrega un producto al carrito.
-            #funcion que va a ser llamada por el carrito
+        #Decrementa el stock cuando un cliente agrega un producto al carrito.
+        #funcion que va a ser llamada por el carrito
         
-            if self.stock_gondola >= cantidad: 
-                self.stock_gondola -= cantidad
-                return True
-            return False
+        if self.stock_gondola >= cantidad: 
+            self.stock_gondola -= cantidad
+            return True
+        return False
 
     def incrementar_stock(self, cantidad):
         
