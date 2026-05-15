@@ -4,8 +4,8 @@ class Verduleria (Producto):
 
     #productos: zanahoria, cebolla, lechuga, 
 
-    def __init__(self, nombre, codigo, marca, precio_por_unidad, stock, umbral_min, umbral_max,peso_vendido):
-        super().__init__(nombre, codigo, marca, precio_por_unidad, stock, umbral_min, umbral_max)
+    def __init__(self, nombre, codigo, marca, precio_por_unidad, umbral ,peso_vendido):
+        super().__init__(nombre, codigo, marca, precio_por_unidad, umbral)
 
         #asumo que precio por unidad es por kilo 
         self.peso_vendido = peso_vendido

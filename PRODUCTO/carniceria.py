@@ -4,8 +4,8 @@ class Carniceria (Producto):
 
     #productos: Vacio, Asado, Costillitas, Pechito, --> esto va en el main
 
-    def __init__(self, nombre, codigo, marca, precio_por_unidad, stock, umbral_min, umbral_max, tipo_corte, peso_vendido):
-        super().__init__(nombre, codigo, marca, precio_por_unidad, stock, umbral_min, umbral_max)
+    def __init__(self, nombre, codigo, marca, precio_por_unidad,umbral, tipo_corte, peso_vendido):
+        super().__init__(nombre, codigo, marca, precio_por_unidad, umbral)
 
         self.tipo_corte= tipo_corte
         self.CATEGORIA="Carniceria"

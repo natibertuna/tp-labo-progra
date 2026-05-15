@@ -18,11 +18,10 @@ class Carrito:
     #Pantalla OLED del carrito: muestra el total acumulado.
     #Se comunica con el controlador central (Almacen).
     
-    def __init(self, gond:Gondola):
+    def __init(self, alm:Almacen):
         self.list_prod=[]                    #me creo lista vacia en donde vamos agregando productos al carrito
         self.total: int                       #precio final de la compra
-        self.gondola=gond
-        self.almacen:Almacen           
+        self.almacen=alm           
 
      #carrito --> gondola --> llamar inventario y verificar stock 
             #si hay stock, agrega y resta uno a la gondola
@@ -33,18 +32,20 @@ class Carrito:
 #---------------Monitoreo y Reposición en Compra----------------------
 
 
-    def agregar_a_carrito (self, producto:Producto, cantidad):
-        if Gondola.buscar_producto(producto.codigo_barra) == -1:
+    def agregar_a_carrito (self, producto:Producto, cantidad, gondola:Gondola):
+        if gondola.buscar_producto(producto.codigo_barra) == -1:
             print("Producto no encontrado")
         else:
-            if producto.stock_gondola - cantidad > producto.umbral_min: #si quiero una cant de productos que no me infiera con el umbral minimo
-                producto.stock_gondola-=cantidad 
+            if gondola.dic['producto.codigo_barras'] - cantidad > producto.umbral_min: #si quiero una cant de productos que no me infiera con el umbral minimo
+                gondola.dic['producto.codigo_barras']-=cantidad #resto el valor del diccionario
+                gondola.productos[producto].remove() #lo elimino de gondola
+
                 for i in cantidad:
                     self.list_prod[producto].append #lo agrego a mi carrito
-                    self.almacen.precio_promo
+                    self.almacen.precio_promo       #llamo a la funcion de almacen
                     print ("Monto Carrito: ", self.total)
         
-            elif producto.stock_gondola - cantidad < producto.umbral_min:
+            elif gondola.dic['producto.codigo_barras'] - cantidad < producto.umbral_min:
                 print("No hay stock disponible. Vuelva a intentarlo mas tarde")
                 self.gondola.reponer_inventario()
 

@@ -53,24 +53,29 @@ class Almacen:
 
         if cat=="Galletitas":
 
+            #HAY QUE GENERALIZAR LO DE LOS PRECIOS
 
              PROMO_GALLETAS = "2x1"           # 2x1 cualquier marca
 
              ya_en_carrito=0
             
+
+                # rever
+
+
              if self.carrito:
                 for item in self.carrito:
                     if (item.CATEGORIA == "Galletitas"):
                         ya_en_carrito += 1
-
+                        for i in self.carrito.list_prod:
+                            cont+= self.carrito.list_prod.prec[i]
 
                 if ya_en_carrito%2==0:
-                    self.carrito.total=producto.precio*(ya_en_carrito/2)
+                    self.carrito.total=cont*(ya_en_carrito/2)
                     print ("Promocion aplicada correctamente")
                 else: 
                     self.carrito.total=producto.precio*((ya_en_carrito-1)/2) + producto.precio
 
-        
         
         elif cat=="Higiene":
 

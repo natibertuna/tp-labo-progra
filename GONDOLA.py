@@ -3,11 +3,24 @@ from INVENTARIO import *
 
 
 class Gondola:
-    def __init__(self, tipo, prod, inv:Inventario):
+    def __init__(self, tipo:str, prod, max ):
         self.tipo = tipo
         self.productos = prod #lista de productos YA en la gondola
-        self.inv=inv
+        self.dic=self.diccionario()
+        self.umbral_maximo=max
+
+        #dic de productos ---> tiene la cant de productos en gondola
         
+    
+    def diccionario(self): #relleno el diccionario con el codigo de cada producto y su stock en gondola
+        dic = {}
+        for i in self.productos:
+            if i.codigo_barras in dic.keys():
+                dic['i.codigo_barras'] += 1 #me aumenta el value
+            else:
+                dic['i.codigo_barras'] = 1 #me crea la llave 
+
+        return dic
     
     def buscar_producto(self, codigo_barra):
         for a in self.productos:
@@ -27,8 +40,8 @@ class Gondola:
         for a in self.productos:
             print(a)
     
-    def reponer_inventario(self):
-        self.inv.verificar_stock()
+    def reponer_inventario(self, inv:Inventario):
+        inv.verificar_stock()
 
 
 
