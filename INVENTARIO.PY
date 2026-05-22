@@ -1,5 +1,7 @@
 
 from DEPOSITO import *
+from GONDOLA import *
+from PRODUCTO import *
 
 class Inventario:
     def __init__(self, depositos:list):
@@ -20,8 +22,12 @@ class Inventario:
                 self.productos.append(producto)
                 print ("Se agrego correctamente a la gondola")
 
-    def verificar_stock(self, gond:Gondola):
-        gond.agregar_stock()
+    def verificar_stock(self, gondola:Gondola, producto:Producto):
+
+        a=gondola.dic['producto.codigo_barras']
+
+        if a<=gondola.umbral_min:
+            #chequea el stock 
 
 
 

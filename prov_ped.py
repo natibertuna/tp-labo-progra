@@ -4,7 +4,7 @@ from PRODUCTO.producto import *
 #creo el objeto pedido 
 
 class Pedido:
-    def __init__(self, prod:Producto):
+    def __init__(self, prod:Producto, cant):
         self.prod=prod
 
 class Proveedor:

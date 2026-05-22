@@ -129,22 +129,54 @@ g5= Gondola("Perfumeria", perfu, 600)
 GONDOLAS=[g1,g2,g3,g4,g5]
 
 
-
-
-# ---------------- DEPOSITO --------------------------------
-d1= Deposito(g1, 460)
-
-
-
 # ---------------- ALMACEN --------------------------------
 Alm=Almacen()
 
+# ---------------- DEPOSITO --------------------------------
+d1= Deposito(g1,400,Alm)
+d2= Deposito(g2, 500, Alm)
+d3 = Deposito(g3, 4000, Alm)
+d4= Deposito(g4, 4650, Alm)
+d5 =  Deposito(g5, 478, Alm)
 
+DEPO = [d1, d2, d3, d4, d5]
+
+
+
+
+# ---------------- INVENTARIO --------------------------------
+inv=Inventario(DEPO)
 
 #------------------------ ARMO EL CARRITO -------------------------
 
 c1=Carrito()
 pantalla= PantallaCarrito(c1)
+
+
+#menu de opciones
+
+print ("-----------BIENVENIDOS AL SUPERMERCADO ESTRELLA-------------------")
+print ("-1) Recorrer las Gondolas ")
+print ("-2) Ver carrito ")
+print ("-3) Salir ")
+a=input(print("-- Que desea hacer?"))
+
+match (a):
+    case '1': 
+        print("Gondola 1: Verduleria ")
+        print("Gondola 2: Bebidas ")
+        print("Gondola 3: Carniceria ")
+        print("Gondola 4: Golosinas ")
+        print("Gondola 5: Lacteos ")
+        print("Gondola 6: Panaderia ")
+        print("Gondola 7: Perfumeria ")
+        b= input(print ("Cual desea elegir? : "))
+
+        match (b):
+            case '1':
+                
+
+
 
 
 while True: 
@@ -153,11 +185,21 @@ while True:
 
     if rta=="si":
         #llama a carrito
-        Carrito.agregar_a_carrito(p16,3)
+        Carrito.agregar_a_carrito(c1,p)
+
 
         #muestro lo que tengo en el carrito
         pantalla.mostrar_productos()
         pantalla.mostrar_total()
+
+
+
+        match:
+            case 1:
+                break
+        
+
+
 
     
 

@@ -152,10 +152,16 @@ class Almacen:
 
 
     def realizar_pedido(ped:Pedido, prov:Proveedor): #funcion que va a ser llamada por deposito
+       #def realizar_pedido(produ)
+       #buscar en lista provedores
+       #
         Proveedor.recibir_pedido(prov,ped)
         cant=Proveedor.confirmar_envio(prov, ped)
         return cant
         
+
+    def agregar_prov(self, proveedor):
+
 
 
 

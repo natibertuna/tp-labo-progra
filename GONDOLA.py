@@ -3,11 +3,12 @@ from INVENTARIO import *
 
 
 class Gondola:
-    def __init__(self, tipo:str, prod, max):
+    def __init__(self, tipo:str, prod, max, min):
         self.tipo = tipo
         self.productos = prod #lista de productos YA en la gondola
         self.dic=self.diccionario()
         self.umbral_maximo=max
+        self.umbral_min = min
 
         #dic de productos ---> tiene la cant de productos en gondola
         
@@ -27,8 +28,7 @@ class Gondola:
             if a.codigo_barra == codigo_barra:
                 return a
             else:
-                return -1
-        return None
+                return None
 
     def mostrar_productos(self):
         print(f"Góndola: {self.tipo}")
@@ -43,7 +43,13 @@ class Gondola:
     def reponer_inventario(self, inv:Inventario):
         inv.verificar_stock(self)
     
-    def crear_gondola(self):
+    def decrementar_gondola(self, cod):
+        a=self.buscar_producto(cod)
+
+        self.dic['cod']-=1 #resto el valor del diccionario
+        self.productos[a].remove() #lo elimino de gondola
+
+
 
 
 

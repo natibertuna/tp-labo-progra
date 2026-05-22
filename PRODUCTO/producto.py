@@ -3,14 +3,13 @@
 from abc import ABC
 
 class Producto(ABC):
-    def __init__(self,nombre, codigo, marca,  precio_por_unidad, umbral):
+    def __init__(self,nombre, codigo, marca,  precio_por_unidad, ):
 
         self.prec = precio_por_unidad
         self.precio_final:int
         self.CATEGORIA:str
         self.nombre = nombre
         self.marca = marca
-        self.umbral_min=umbral
         self.codigo_barras= codigo
 
    
