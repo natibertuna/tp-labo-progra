@@ -42,6 +42,7 @@ class Almacen:
                 print ("Producto No Encontrado")
                 return None 
                 #si no encuentra el producto en el carrito, no devuelve nada
+                
 
     #------------------ Cálculo de Promociones-----------------------
 
@@ -58,29 +59,32 @@ class Almacen:
              PROMO_GALLETAS = "2x1"           # 2x1 cualquier marca
 
              ya_en_carrito=0
-            
-
                 # rever
 
 
+            #PREGUNTAR SI ESTA BIEN ENTENDIDA  
+
              if self.carrito:
-                for item in self.carrito:
+                cont=0
+                galles=[]
+                for item in self.carrito.list_prod:
                     if (item.CATEGORIA == "Galletitas"):
                         ya_en_carrito += 1
-                        for i in self.carrito.list_prod:
-                            cont+= self.carrito.list_prod.prec[i]
+                        galles.append(item) #agrego las galletitas a una lista auxiliar 
+                        cont+= self.carrito.list_prod.prec[item] #acumulo el precio total
+
 
                 if ya_en_carrito%2==0:
                     self.carrito.total=cont*(ya_en_carrito/2)
                     print ("Promocion aplicada correctamente")
                 else: 
-                    self.carrito.total=producto.precio*((ya_en_carrito-1)/2) + producto.precio
+                    self.carrito.total=cont*((ya_en_carrito-1)/2) + galles[-1].precio
+                    print ("Promocion aplicada correctamente")
 
         
         elif cat=="Higiene":
 
             PROMO_PERFUMERIA = 0.50          # 50% descuento cualquier producto
-
 
             ya_en_carrito=0
 
@@ -92,8 +96,6 @@ class Almacen:
             self.carrito.total=self.determinar_precio(cod_bar)*ya_en_carrito*PROMO_PERFUMERIA
 
             print ("Promocion aplicada Correctamente")
-
-
 
         elif cat=="Bebidas":
 
@@ -118,7 +120,6 @@ class Almacen:
 
 
             # Unidades que aplican descuento (un par)
-            
 
             if ya_en_carrito%2==0:                                                       #si es nro par
                 self.carrito.total=producto.precio*(ya_en_carrito/2)*PROMO_BEBIDAS

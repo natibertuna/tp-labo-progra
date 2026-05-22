@@ -1,5 +1,8 @@
 #--------------------------- IMPORTO ARCHIVOS -------------------------------- 
 
+
+#importo las clases de los productos
+
 from PRODUCTO import producto
 from PRODUCTO.panaderia import *
 from PRODUCTO.bebidas import *
@@ -9,20 +12,23 @@ from PRODUCTO.verduleria import *
 from PRODUCTO.higiene import *
 from PRODUCTO.lacteos import *
 
+#importo las funciones necesarias
+
 from CARRITO import *
 from ALMACEN import *
 from GONDOLA import *
 from INVENTARIO import *
 from DEPOSITO import *
 from prov_ped import *
+from PANTALLA_CARRITO import *
+from TABLET import *
 
 
 import os
 os.system('cls')
 
 
-
-#me creo 3 productos de cada producto
+#me creo 3 productos de cada clase
 
 # ----------------------------- VERDULERIA -----------------------
 p1 = Verduleria("Zanahoria", "VERD001", "Huerta Orgánica", 1200.00, 50, 10, 100, 1.5)
@@ -104,14 +110,20 @@ Alm=Almacen()
 #------------------------ ARMO EL CARRITO -------------------------
 
 c1=Carrito()
+pantalla= PantallaCarrito(c1)
 
 
 while True: 
-rta=input("Desea agregar productos a su carrito? (si/no): ")
+    rta=input("Desea agregar productos a su carrito? (si/no): ")
 
-if rta=="si":
-    #llama a carrito
-    Carrito.agregar_a_carrito(p16,3)
+    if rta=="si":
+        #llama a carrito
+        Carrito.agregar_a_carrito(p16,3)
+
+        #muestro lo que tengo en el carrito
+        pantalla.mostrar_productos()
+        pantalla.mostrar_total()
+
     
 
 
