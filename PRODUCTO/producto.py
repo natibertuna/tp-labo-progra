@@ -19,3 +19,7 @@ class Producto(ABC):
             f"[{self.codigo_barras}] {self.marca} {self.nombre} - "
             f"${self.prec} | Góndola: {self.CATEGORIA}"
         )
+    
+    def crear_producto(self):
+
+        #

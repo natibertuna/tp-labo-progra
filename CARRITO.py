@@ -32,7 +32,8 @@ class Carrito:
 #---------------Monitoreo y Reposición en Compra----------------------
 
 
-    def agregar_a_carrito (self, producto:Producto, cantidad, gondola:Gondola):
+    def agregar_a_carrito (self, producto:Producto, gondola:Gondola):
+        #agrego al carrito de a uno
 
         if gondola.buscar_producto(producto.codigo_barra) == -1:
             print("Producto no encontrado")
@@ -40,18 +41,15 @@ class Carrito:
         #bsuco los productos en base al diccionario que creamos en la clase Gondola
 
         else:
-            if gondola.dic['producto.codigo_barras'] - cantidad > producto.umbral_min: #si quiero una cant de productos que no me infiera con el umbral minimo
-                gondola.dic['producto.codigo_barras']-=cantidad #resto el valor del diccionario
+            if gondola.dic['producto.codigo_barras'] - 1 > producto.umbral_min: #si quiero una cant de productos que no me infiera con el umbral minimo
+                gondola.dic['producto.codigo_barras']-=1 #resto el valor del diccionario
                 gondola.productos[producto].remove() #lo elimino de gondola
 
-
-                for i in cantidad:
-                    self.list_prod[producto].append #lo agrego a mi carrito
-                    self.almacen.precio_promo()       #llamo a la funcion de almacen
-                    print ("Monto Carrito: ", self.total)
+                self.list_prod[producto].append   #lo agrego a mi carrito
+                self.almacen.precio_final(producto.codigo_barras, self)       #llamo a la funcion de almacen DE PRECIO FINAL 
         
 
-            elif gondola.dic['producto.codigo_barras'] - cantidad < producto.umbral_min:
+            elif gondola.dic['producto.codigo_barras'] - 1 < producto.umbral_min:
                 print("No hay stock disponible. Vuelva a intentarlo mas tarde")
                 self.gondola.reponer_inventario()
 

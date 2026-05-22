@@ -22,5 +22,11 @@ class PantallaCarrito():
 
         #muestra el precio total del carrito
 
-        print ("\n PRECIO TOTAL: $", self.carrito.total)
+        print ("\n MONTO TOTAL: $", self.carrito.total)
+
+    def mostrar_promos(self):
+        print("PROMOCIONES DISPONIBLES")
+        print("\n PROMO GALLETITAS: 2x1 cualquier marca ")
+        print("\n PROMO PERFUMERIA: 50% en cada producto")
+        print("\n PROMO BEBIDAS: 30% en la segunda unidad de la misma marca")
 

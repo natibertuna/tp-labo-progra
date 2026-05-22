@@ -1,6 +1,12 @@
 
+#SU UNICA FUNCION ES PRINTEAR LAS COSAS DE C/ GONDOLA 
+
+from GONDOLA import *
 
 
-#SU UNICA FUNCION ES PRINTEAR LAS COSAS
+#marca, nombre, stock y precio por unidad (en liq la cant de liquidos)
+
+
+
 
 

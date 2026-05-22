@@ -3,7 +3,7 @@ from INVENTARIO import *
 
 
 class Gondola:
-    def __init__(self, tipo:str, prod, max ):
+    def __init__(self, tipo:str, prod, max):
         self.tipo = tipo
         self.productos = prod #lista de productos YA en la gondola
         self.dic=self.diccionario()
@@ -41,7 +41,9 @@ class Gondola:
             print(a)
     
     def reponer_inventario(self, inv:Inventario):
-        inv.verificar_stock()
+        inv.verificar_stock(self)
+    
+    def crear_gondola(self):
 
 
 

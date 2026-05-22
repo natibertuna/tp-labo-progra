@@ -11,13 +11,12 @@ if TYPE_CHECKING:
 
 class Almacen:
 
-    def __init__(self, car:Carrito):
-       self.carrito=car
+    def __init__(self):
        self.carritos_previos=[] #lista que contiene todos los carritos
     
 
-    def hallar_producto(self, cod):
-        p = self.carrito.list_prod
+    def hallar_producto(self, cod, car:Carrito):
+        p = car.list_prod
 
         for i in p:
             if i.codigo_barras==cod: #encontramos el producto 
@@ -25,32 +24,38 @@ class Almacen:
                 #me devuelve el producto 
                 return prod
             else:
+                print ("Producto No Encontrado")
                 return False #producto no encontrado
+
 
 
     #-------------------- Determinación de Precios ---------------------------
 
 
-    def determinar_precio(self, codigo_barra: str) -> float | None:
-        p = self.carrito.list_prod
+    def determinar_precio(self, codigo_barra: str, Gondolas:list) -> float | None:
+        p = Gondolas.productos
 
-        for i in p:
-            if i.codigo_barras==codigo_barra: #encontramos el producto y le extraigo su precio
-                precio=i.precio_final
-                return precio
+        for i in Gondolas:
+            for j in p:
+                if codigo_barra== j.codigo_barras:#encontramos el producto y le extraigo su precio
+                    precio=j.precio_final
+                    return precio
             else:
                 print ("Producto No Encontrado")
                 return None 
-                #si no encuentra el producto en el carrito, no devuelve nada
+                
                 
 
     #------------------ Cálculo de Promociones-----------------------
 
 
-    def precio_promo (self, cod_bar):
-        producto = self.hallar_producto(cod_bar)
+    def precio_final (self, cod_bar, carrito:Carrito):
+        producto = self.hallar_producto(cod_bar,carrito)
 
         cat=producto.CATEGORIA
+        cont=0
+        precio_pasajero=0
+
 
         if cat=="Galletitas":
 
@@ -61,39 +66,40 @@ class Almacen:
              ya_en_carrito=0
                 # rever
 
-
             #PREGUNTAR SI ESTA BIEN ENTENDIDA  
 
              if self.carrito:
-                cont=0
+
                 galles=[]
+
                 for item in self.carrito.list_prod:
-                    if (item.CATEGORIA == "Galletitas"):
-                        ya_en_carrito += 1
-                        galles.append(item) #agrego las galletitas a una lista auxiliar 
-                        cont+= self.carrito.list_prod.prec[item] #acumulo el precio total
+
+                    #no podemos el if de la categoria porque es la condicion inicial de este bucle4
+
+                    ya_en_carrito += 1
+                    galles.append(item) #agrego las galletitas a una lista auxiliar 
+                    cont+= self.carrito.list_prod.prec[item] #acumulo el precio total
 
 
                 if ya_en_carrito%2==0:
-                    self.carrito.total=cont*(ya_en_carrito/2)
+                    precio_pasajero=cont*(ya_en_carrito/2)
                     print ("Promocion aplicada correctamente")
                 else: 
-                    self.carrito.total=cont*((ya_en_carrito-1)/2) + galles[-1].precio
+                    precio_pasajero=cont*((ya_en_carrito-1)/2) + galles[-1].precio
                     print ("Promocion aplicada correctamente")
 
         
-        elif cat=="Higiene":
+        elif cat=="Perfumeria":
 
             PROMO_PERFUMERIA = 0.50          # 50% descuento cualquier producto
 
             ya_en_carrito=0
 
-            if self.carrito:
-                for item in self.carrito.items:
-                    if (item.CATEGORIA == "Higiene"):
-                        ya_en_carrito += 1
+            for item in self.carrito.items:
+                ya_en_carrito += 1 #acumulo la cantidad de productos en el carrito
+                cont+=self.determinar_precio(cod_bar) #acumulo los precios
 
-            self.carrito.total=self.determinar_precio(cod_bar)*ya_en_carrito*PROMO_PERFUMERIA
+            precio_pasajero=cont*ya_en_carrito*PROMO_PERFUMERIA
 
             print ("Promocion aplicada Correctamente")
 
@@ -122,17 +128,25 @@ class Almacen:
             # Unidades que aplican descuento (un par)
 
             if ya_en_carrito%2==0:                                                       #si es nro par
-                self.carrito.total=producto.precio*(ya_en_carrito/2)*PROMO_BEBIDAS
+                precio_pasajero=producto.precio*(ya_en_carrito/2)*PROMO_BEBIDAS
 
                 print ("Promocion aplicada correctamente")
+
             else: 
-                self.carrito.total=producto.precio*((ya_en_carrito-1)/2)*PROMO_BEBIDAS + producto.precio
+                precio_pasajero=producto.precio*((ya_en_carrito-1)/2)*PROMO_BEBIDAS + producto.precio
 
             # Si no hay segunda unidad de la misma marca, sin promo
 
+        else:
 
-        #bebidas: 30% en la seg unidad
+            #el precio para las demas categorias de productos
 
+            cont_sinpromo+=self.determinar_precio(cod_bar) #importante que este contador NO SE INICIALICE EN 0
+
+        
+        self.carrito.total = cont_sinpromo + precio_pasajero
+
+        
 
     #---------------------- Generación de Pedidos a un Proveedor externo ---------------------
 

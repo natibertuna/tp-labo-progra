@@ -2,8 +2,8 @@
 from DEPOSITO import *
 
 class Inventario:
-    def __init__(self, deposito:Deposito):
-        self.deposito = deposito
+    def __init__(self, depositos:list):
+        self.lista = depositos
     
     #def stock()
         
@@ -20,8 +20,8 @@ class Inventario:
                 self.productos.append(producto)
                 print ("Se agrego correctamente a la gondola")
 
-    def verificar_stock(self):
-        self.deposito.agregar_stock()
+    def verificar_stock(self, gond:Gondola):
+        gond.agregar_stock()
 
 
 
