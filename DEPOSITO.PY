@@ -1,3 +1,4 @@
+"""""
 from GONDOLA import * 
 from ALMACEN import *
 
@@ -17,14 +18,14 @@ class Deposito:
 
             pass #nuestra intencion es que despues de actualizarse, entre a los otros ifs
         
-        if self.tipo.dic['prod.codigo_barras']+self.cant < self.tipo.umbral_max:   #accedo al value
+        if self.tipo.dic[prod.codigo_barras]+self.cant < self.tipo.umbral_max:   #accedo al value
 
-            self.tipo.dic['prod.codigo_barras']=self.cant
+            self.tipo.dic[prod.codigo_barras]=self.cant
 
             self.cant=0
 
-        elif self.tipo.dic['prod.codigo_barras']+self.cant > self.tipo.umbral_max: 
-            resto=(self.tipo.dic['prod.codigo_barras']+self.cant)- self.tipo.umbral_max
-            self.tipo.dic['prod.codigo_barras']= (self.cant-resto)
+        elif self.tipo.dic[prod.codigo_barras]+self.cant > self.tipo.umbral_max: 
+            resto=(self.tipo.dic[prod.codigo_barras]+self.cant)- self.tipo.umbral_max
+            self.tipo.dic[prod.codigo_barras]= (self.cant-resto)
             self.cant=resto
-    
+"""""

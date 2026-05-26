@@ -23,9 +23,9 @@ class Almacen:
                 prod=i 
                 #me devuelve el producto 
                 return prod
-            else:
-                print ("Producto No Encontrado")
-                return False #producto no encontrado
+            
+        print ("Producto No Encontrado")
+        return False #producto no encontrado
 
 
 
@@ -151,7 +151,7 @@ class Almacen:
     #---------------------- Generación de Pedidos a un Proveedor externo ---------------------
 
 
-    def realizar_pedido(ped:Pedido, prov:Proveedor): #funcion que va a ser llamada por deposito
+    def realizar_pedido(self,ped:Pedido, prov:Proveedor): #funcion que va a ser llamada por deposito
        #def realizar_pedido(produ)
        #buscar en lista provedores
        #
@@ -161,6 +161,7 @@ class Almacen:
         
 
     def agregar_prov(self, proveedor):
+        #falta.
 
 
 

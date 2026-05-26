@@ -1,9 +1,16 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from PRODUCTO.producto import Producto
-from INVENTARIO import *
+
+if TYPE_CHECKING:
+    from INVENTARIO import *
+
+#from INVENTARIO import * #sobra
 
 
 class Gondola:
-    def __init__(self, tipo:str, prod, max, min):
+    def __init__(self, tipo:str, prod:list, max:int, min:int):
         self.tipo = tipo
         self.productos = prod #lista de productos YA en la gondola
         self.dic=self.diccionario()
@@ -17,18 +24,17 @@ class Gondola:
         dic = {}
         for i in self.productos:
             if i.codigo_barras in dic.keys():
-                dic['i.codigo_barras'] += 1 #me aumenta el value
+                dic[i.codigo_barras] += 1 #me aumenta el value
             else:
-                dic['i.codigo_barras'] = 1 #me crea la llave 
+                dic[i.codigo_barras] = 1 #me crea la llave 
 
         return dic
     
-    def buscar_producto(self, codigo_barra):
+    def buscar_producto(self, codigo_barras):
         for a in self.productos:
-            if a.codigo_barra == codigo_barra:
+            if a.codigo_barras == codigo_barras:
                 return a
-            else:
-                return None
+        return None
 
     def mostrar_productos(self):
         print(f"Góndola: {self.tipo}")
@@ -40,14 +46,14 @@ class Gondola:
         for a in self.productos:
             print(a)
     
-    def reponer_inventario(self, inv:Inventario):
-        inv.verificar_stock(self)
+    def reponer_inventario(self, inv:Inventario,prodcuto: Producto):
+        inv.verificar_stock(self,prodcuto)
     
     def decrementar_gondola(self, cod):
         a=self.buscar_producto(cod)
 
-        self.dic['cod']-=1 #resto el valor del diccionario
-        self.productos[a].remove() #lo elimino de gondola
+        self.dic[cod]-=1 #resto el valor del diccionario
+        self.productos.remove(a) #lo elimino de gondola
 
 
 
