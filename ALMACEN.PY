@@ -3,8 +3,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from PRODUCTO import *
-    from CARRITO import *
+    from CARRITO import Carrito
     from prov_ped import *
+    from GONDOLA import *
+
+import os
+os.system('cls')
 
 #realiza contacto con los proveedores de los productos, el cálculo de las promociones, 
 # determinación de precios del producto
@@ -12,8 +16,8 @@ if TYPE_CHECKING:
 class Almacen:
 
     def __init__(self):
-       self.carritos_previos=[] #lista que contiene todos los carritos
-       self.proveedores = []
+       self.carritos_previos: list[Carrito]=[] #lista que contiene todos los carritos
+       self.proveedores :list= []
     
 
     def hallar_producto(self, cod, Gondolas:list):  #funcion para buscar un producto en TODO el almcen
@@ -25,11 +29,7 @@ class Almacen:
                     #me devuelve el producto 
                     print("Producto encontrado: ", producto.nombre)
                     return producto
-            
-        print ("Producto No Encontrado")
-        return False #producto no encontrado
-
-
+        return None
 
     #-------------------- Determinación de Precios ---------------------------
 
@@ -38,26 +38,27 @@ class Almacen:
 
         for gondola in Gondolas:
             for producto in gondola.productos:
-                if codigo_barra== producto.codigo_barras:#encontramos el producto y le extraigo su precio
+                if codigo_barra== producto.codigo_barras:
+                    
+                    #encontramos el producto y le extraigo su precio
+                    
                     precio= producto.precio_final
                     return precio
-            else:
-                print ("Producto No Encontrado")
-                return None 
-                
+        return None
                 
 
     #------------------ Cálculo de Promociones-----------------------
 
 
-    def precio_final (self, cod_bar, carrito:Carrito):
+    def precio_final (self, cod_bar:str, carrito:Carrito):
         producto = self.hallar_producto(cod_bar,carrito)
 
         cat=producto.CATEGORIA
-        cont_sinpromo=0.0
+
+        #inicializo los contadores
+
         cont=0.0
         precio_pasajero=0
-
 
         if cat=="Galletitas":
 
@@ -67,18 +68,15 @@ class Almacen:
 
              ya_en_carrito=0
 
-             if self.carrito:
+             if carrito:
 
                 galles=[]
 
-                for item in self.carrito.list_prod:
-
-                    #no podemos el if de la categoria porque es la condicion inicial de este bucle4
+                for item in carrito.list_prod:
 
                     ya_en_carrito += 1
                     galles.append(item) #agrego las galletitas a una lista auxiliar 
-                    cont+= self.carrito.list_prod.prec[item] #acumulo el precio total
-
+                    cont+= carrito.list_prod.prec[item] #acumulo el precio total
 
                 if ya_en_carrito%2==0:
                     precio_pasajero=cont*(ya_en_carrito/2)
@@ -86,7 +84,6 @@ class Almacen:
                 else: 
                     precio_pasajero=cont*((ya_en_carrito-1)/2) + galles[-1].precio
                     print ("Promocion 2x1 aplicada correctamente")
-
         
         elif cat=="Perfumeria":
 
@@ -111,15 +108,14 @@ class Almacen:
             #nro par --> (precio + prec*0.3)
             #nro impar --> (precio + prec*0.3)*nro par + precio
 
-
             #comparar por marcas
             # Contar unidades de esta MARCA ya en el carrito
             ya_en_carrito = 0
 
             prod=self.hallar_producto(cod_bar)
             
-            if self.carrito:
-                for item in self.carrito.items:
+            if carrito:
+                for item in carrito.items:
                     if (item.CATEGORIA == "Bebidas" and item.marca == prod.marca):
                         ya_en_carrito += 1
 
@@ -144,21 +140,29 @@ class Almacen:
             cont_sinpromo+=self.determinar_precio(cod_bar) #importante que este contador NO SE INICIALICE EN 0
 
         
-        self.carrito.total = cont_sinpromo + precio_pasajero
+        carrito.total = cont_sinpromo + precio_pasajero
 
-        
 
     #---------------------- Generación de Pedidos a un Proveedor externo ---------------------
 
 
-    def realizar_pedido(self,ped:Pedido, prov:Proveedor): #funcion que va a ser llamada por deposito
-       #def realizar_pedido(produ)
-       #buscar en lista provedores
-       #
-        Proveedor.recibir_pedido(prov,ped)
-        cant=Proveedor.confirmar_envio(prov, ped)
-        return cant
+    def realizar_pedido(self, producto: "Producto",gondola: "Gondola") -> int:
+
+        if not self.proveedores:
+            print("  ✗ Almacen: sin proveedores registrados.")
+            return 0
         
+        # Por ahora se usa el primer proveedor --> aquí se podría filtrar por tipo
+        prov = self.proveedores[0]
+        pedido = Pedido(producto, gondola.umbral_maximo)
+        return self._realizar_pedido(pedido, prov)
+        
+    def _realizar_pedido(self, ped: "Pedido", prov: "Proveedor") -> int:
+        #comunicación concreta con el proveedor (uso interno)
+        
+        prov.recibir_pedido(ped)
+        return prov.confirmar_envio(ped)
+ 
 
     def agregar_prov(self, proveedor:Proveedor):
         self.proveedores.append(proveedor)

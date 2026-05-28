@@ -6,7 +6,8 @@ from PRODUCTO.producto import Producto
 if TYPE_CHECKING:
     from INVENTARIO import *
 
-#from INVENTARIO import * #sobra
+import os
+os.system('cls')
 
 
 class Gondola:
@@ -17,12 +18,17 @@ class Gondola:
         self.umbral_min = min
 
         #dic de productos ---> tiene la cant de productos en gondola
-        self.dic=self.diccionario()
+        self.dic=self._llenar_diccionario()
     
-    def diccionario(self): #relleno el diccionario con el codigo de cada producto y su stock en gondola
-        dic = {}
+    
+    #me creo un metodo privado
+    def _llenar_diccionario(self)-> dict[str, int]: 
+        
+        #relleno el diccionario con el codigo de cada producto y su stock en gondola
+        dic: dict[str, int] = {}
+
         for i in self.productos:
-            if i.codigo_barras in dic.keys():
+            if i.codigo_barras in dic:
                 dic[i.codigo_barras] += 1 #me aumenta el value
             else:
                 dic[i.codigo_barras] = 1 #me crea la llave 
@@ -43,20 +49,29 @@ class Gondola:
             print("No hay productos disponible.")
             return
         
-        for a in self.productos:
-            for b in len(self.productos):
-                print(b)  #imprime el nro del producto
-                a.mostrar_info()
+        vistos: dict[str, Producto] = {} #evito imprimir repetidos
+
+        for p in self.productos:
+            if p.codigo_barras not in vistos:
+                vistos[p.codigo_barras] = p
+ 
+        for i, p in enumerate(vistos.values(), start=1):
+            stock = self.dic.get(p.codigo_barras, 0)
+            print(f"  {i}) {p.nombre} ({p.marca}) - ${p.precio:.2f}  "
+                  f"[stock: {stock}]")
     
     def reponer_inventario(self, inv:Inventario ,prodcuto: Producto):
         inv.verificar_stock(self,prodcuto)
     
     def decrementar_gondola(self, cod):
-        a=self.buscar_producto(cod)
+        prod=self.buscar_producto(cod)
 
-        if a:
-            self.dic[cod]-=1 #resto el valor del diccionario
-            self.productos.remove(a) #lo elimino de gondola
+        if prod and self.dic.get(cod, 0) > 0:
+            self.dic[cod] -= 1
+            self.productos.remove(prod)
+            return True
+        
+        return False
 
 
 

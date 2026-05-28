@@ -1,7 +1,15 @@
 
 #la unica funcion de la pantalla es mostrar todo el tiempo el precio total de carrito y los productos que tiene 
 
-from CARRITO import *
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+#evito bucles
+
+if TYPE_CHECKING:
+    from CARRITO import Carrito
+import os
+os.system('cls')
 
 
 class PantallaCarrito():

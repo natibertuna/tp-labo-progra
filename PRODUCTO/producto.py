@@ -1,6 +1,9 @@
  #clase padre
 
 from abc import ABC
+from abc import abstractmethod, __str__
+import os
+os.system('cls')
 
 class Producto(ABC):
     def __init__(self,nombre, codigo, marca,  precio_por_unidad ):
@@ -14,11 +17,11 @@ class Producto(ABC):
 
    
     @property
-    def precio_por_unidad(self):
+    def precio(self):
         return self._precio
     
 
-    @precio_por_unidad.setter
+    @precio.setter
     def precio(self, nuevo_precio):
         if nuevo_precio < 0:
             raise ValueError("El precio no puede ser negativo.")
@@ -28,9 +31,11 @@ class Producto(ABC):
     #defino un metodo magico para imprimir las cosas
 
     def __str__(self):
-        return f"[{self.codigo}] {self.nombre} ({self.marca}) {self.CATEGORIA} - ${self.precio}"
+        return f"[{self.codigo_barras}] {self.nombre} ({self.marca}) {self.CATEGORIA} - ${self._precio}"
     
     @abstractmethod
-    def crear_producto(self):
+    def calcular_precio_final(self):
+        """Cada subclase define cómo se calcula su precio final."""
+        pass
 
-        #
+

@@ -4,20 +4,19 @@ class Carniceria (Producto):
 
     #productos: Vacio, Asado, Costillitas, Pechito, --> esto va en el main
 
-    def __init__(self, nombre, codigo, marca, precio_por_unidad,umbral, tipo_corte, peso_vendido):
-        super().__init__(nombre, codigo, marca, precio_por_unidad, umbral)
+    def __init__(self, nombre, codigo, marca, precio_por_unidad, tipo_corte, peso_vendido):
+        super().__init__(nombre, codigo, marca, precio_por_unidad)
 
         self.tipo_corte= tipo_corte
         self.CATEGORIA="Carniceria"
         self.peso_vendido = peso_vendido
-        self.precio_final = self.peso_vendido*self.prec
+        self.precio_final = self.calcular_precio_final()
 
-        if self.nombre=="Morcilla" or self.nombre == "Chorizo":
-            self.tipo_corte=None
-            self.peso_vendido= None #no existe el peso porque viene por unidad
-
-            self.precio_final=self.prec
-
+    def calcular_precio_final(self):  # implementa el método abstracto
+        if self.peso_vendido is None:
+            self.tipo_corte= None
+            return self._precio           # vendido por unidad (chorizo, morcilla)
+        return self._precio * self.peso_vendido
 
     
     
