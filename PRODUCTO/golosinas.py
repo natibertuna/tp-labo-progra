@@ -5,5 +5,6 @@ class Golosinas (Producto):
         super().__init__(nombre, codigo, marca, precio_por_unidad, umbral)
         self.peso=peso
         self.precio_final=self.peso*self.prec
+        self.CATEGORIA =  "Golosinas"
 
         

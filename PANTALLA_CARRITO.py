@@ -2,7 +2,6 @@
 #la unica funcion de la pantalla es mostrar todo el tiempo el precio total de carrito y los productos que tiene 
 
 from CARRITO import *
-from ALMACEN import *
 
 
 class PantallaCarrito():
@@ -14,8 +13,15 @@ class PantallaCarrito():
         #muestra todo lo que hay en el carrito
 
         for i in self.carrito.list_prod:
-            print ("\n ELEMENTOS EN EL CARRITO")
-            print ("\n", self.carrito.list_prod[i]) #imprime todo
+            print ("\n ----------- ELEMENTOS EN EL CARRITO----------------")
+
+            if not self.carrito.list_prod:
+                print ("El carrito se encuentra vacio ")
+            else:
+                for prod in self.carrito.list_prod:
+                    print (f"  - [{prod.codigo_barras}]   [{prod.nombre}] [{prod.marca}] [{prod.codigo_barras}] "
+                           f"  - $[{prod.precio:.2f}] ") 
+                    #imprime todo
 
     
     def mostrar_total(self):

@@ -19,7 +19,7 @@ class Carrito:
     
     def __init__(self, alm: "Almacen", inv: Inventario):
         self.list_prod=[]                    #me creo lista vacia en donde vamos agregando productos al carrito
-        self.total: 0                       #precio final de la compra
+        self.total:float = 0                       #precio final de la compra
         self.almacen=alm  
         self.inventario = inv         
 
@@ -29,13 +29,24 @@ class Carrito:
             #si no hay ni en gondola ni en inv, llama a almacen que llama a proveedor   
 
 
+    def mostrar_productos(self):
+        if self.list_prod == None:
+            print ("No hay productos en el carrito")
+
+        else:
+            for i in self.list_prod:
+                i.mostrar_info()  #como i es un producto, puedo usar las funciones del mismo
+
+
+
+
 #---------------Monitoreo y Reposición en Compra----------------------
 
 
     def agregar_a_carrito (self, producto:Producto, gondola:Gondola):
         #agrego al carrito de a uno
 
-        if gondola.buscar_producto(producto.codigo_barra) == None:
+        if gondola.buscar_producto(producto.codigo_barras) == None:
             print("Producto no encontrado")
 
         #bsuco los productos en base al diccionario que creamos en la clase Gondola
