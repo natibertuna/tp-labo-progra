@@ -44,28 +44,27 @@ class Gondola:
 
     def mostrar_productos(self):
         print(f"Góndola: {self.tipo}")
-
-        if not self.productos:
-            print("No hay productos disponible.")
-            return
         
-        vistos: dict[str, Producto] = {} #evito imprimir repetidos
-
-        for p in self.productos:
-            if p.codigo_barras not in vistos:
-                vistos[p.codigo_barras] = p
+        if not self.dic:
+            print("No hay productos disponibles.")
+            return
  
-        for i, p in enumerate(vistos.values(), start=1):
-            stock = self.dic.get(p.codigo_barras, 0)
-            print(f"  {i}) {p.nombre} ({p.marca}) - ${p.precio:.2f}  "
-                  f"[stock: {stock}]")
+        for i, (cod, stock) in enumerate(self.dic.items(), start=1):
+            prod = self.buscar_producto(cod)
+            if prod is None:
+                continue
+            estado = f"[stock: {stock}]" if stock > 0 else "[sin stock]"
+            print(f"  {i}) {prod.nombre} ({prod.marca}) - ${prod.precio:.2f}  {estado}")
     
     def reponer_inventario(self, inv:Inventario ,prodcuto: Producto):
         inv.reponer_stock(self,prodcuto)
     
-    def decrementar_gondola(self, cod):
+    def decrementar_gondola(self, cod, cantidad=1):
+
         if cod in self.dic and self.dic[cod] > 0:
-            self.dic[cod] -= 1
+            
+            self.dic[cod] -= cantidad
+            self.dic[cod] = round(self.dic[cod], 3)
             return True
         return False
     

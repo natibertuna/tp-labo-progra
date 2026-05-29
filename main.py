@@ -57,13 +57,12 @@ bebidas=[p4,p5,p6,p7,p8,p31, p32, p33]
 
 #---------------------------- CARNICERIA --------------------------
 
-c1 = Carniceria("Asado", 3001, "La Hacienda", 12000, "Vacuno", 1.5)
-c2 = Carniceria("Costillitas", 3002, "La Hacienda", 10000, "Cerdo", 1.2)
-c3 = Carniceria("Pechito de cerdo", 3003, "Swift", 9500, "Cerdo", 1.0)
-c4 = Carniceria("Chorizo", 3004, "Paladini", 800, None, None)
-c5 = Carniceria("Morcilla", 3005, "Paladini", 700, None, None)
+c1 = Carniceria("Asado", "3001", "La Hacienda", 12000, "Vacuno", 1.5)
+c2 = Carniceria("Costillitas", "3002", "La Hacienda", 10000, "Cerdo", 1.2)
+c3 = Carniceria("Pechito de cerdo", "3003", "Swift", 9500, "Cerdo", 1.0)
+c4 = Carniceria("Chorizo", "3004", "Paladini", 800, None, None)
 
-car=[c1,c2,c3,c4,c5]
+car=[c1,c2,c3,c4]
 
 
 #----------------------- GALLETITAS ------------------------------
@@ -100,20 +99,20 @@ l1=[p21,p22, p23]
 
 # ------------------------ PANADERIA -------------------------------
 
-pan1 = Panaderia("Pan lactal blanco", 2001, "Bimbo", 2500, "Lactal")
-pan2 = Panaderia("Pan de hamburguesa", 2002, "Fargo", 1800, "Hamburguesa")
-pan3 = Panaderia("Pan pebete", 2003, "Fargo", 1500, "Pebete")
-pan4 = Panaderia("Pan integral", 2004, "Bimbo", 2800, "Integral")
-pan5 = Panaderia("Pan de molde", 2005, "Lactal", 2300, "Molde")
+pan1 = Panaderia("Pan lactal blanco", "2001", "Bimbo", 2500, "Lactal")
+pan2 = Panaderia("Pan de hamburguesa", "2002", "Fargo", 1800, "Hamburguesa")
+pan3 = Panaderia("Pan pebete", "2003", "Fargo", 1500, "Pebete")
+pan4 = Panaderia("Pan integral", "2004", "Bimbo", 2800, "Integral")
+pan5 = Panaderia("Pan de molde", "2005", "Lactal", 2300, "Molde")
 
-lista_panaderia=[pan1, pan2, pan3, pan4, pan5]
+lista_panaderia=[pan2, pan3, pan4, pan5, pan1]
 
 #----------------------- FACTURAS ----------------------------------
-f1 = Factura("Medialuna de manteca", 1001, "La Panadería", 500, "Medialuna")
-f2 = Factura("Vigilante", 1002, "La Panadería", 650, "Vigilante")
-f3 = Factura("Torta negra", 1003, "Dulce Hogar", 800, "Torta Negra")
-f4 = Factura("Cañoncito de dulce de leche", 1004, "Dulce Hogar", 900, "Cañoncito")
-f5 = Factura("Bola de fraile", 1005, "Panificados SRL", 750, "Bola de Fraile")
+f1 = Factura("Medialuna de manteca", "1001", "La Panadería", 500, "Medialuna")
+f2 = Factura("Vigilante", "1002", "La Panadería", 650, "Vigilante")
+f3 = Factura("Torta negra", "1003", "Dulce Hogar", 800, "Torta Negra")
+f4 = Factura("Cañoncito de dulce de leche", "1004", "Dulce Hogar", 900, "Cañoncito")
+f5 = Factura("Bola de fraile", "1005", "Panificados SRL", 750, "Bola de Fraile")
 
 list_facturas=[f1,f2,f3,f4,f5]
 
@@ -184,7 +183,7 @@ inv=Inventario(lista_gons, Alm)
 #------------------------ ARMO EL CARRITO Y SU PANTALLA -------------------------
 
 c1=Carrito(Alm, inv)
-Tab=Tablet
+Tab=Tablet()
 pantalla= PantallaCarrito(c1)
 
 #----------------------------- MENU PRINCIPAL -------------------------------------

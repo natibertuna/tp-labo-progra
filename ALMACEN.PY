@@ -145,7 +145,7 @@ class Almacen:
                             cont5+=manaos[item6]+manaos[item6+1]*0.7
                     else:
                         for item6 in range(0, len(manaos)-2, 2):
-                            cont5+=manaos[item6]+coca[item6+1]*0.7
+                            cont5+=manaos[item6]+manaos[item6+1]*0.7
                         cont5+=manaos[len(manaos)-1]
 
                 if cc3!=0:

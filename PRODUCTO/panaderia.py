@@ -2,8 +2,8 @@ from PRODUCTO.producto import *
 
 class Panaderia (Producto):
 
-    def _init_(self, nombre, codigo, marca, precio_por_unidad,tipo):
-        super()._init_(nombre, codigo, marca, precio_por_unidad)
+    def __init__(self, nombre, codigo, marca, precio_por_unidad,tipo):
+        super().__init__(nombre, codigo, marca, precio_por_unidad)
         self.__tipo = tipo #lactal,pebete,etc.
         self.CATEGORIA="Panaderia"
         self.precio_final = self.calcular_precio_final()

@@ -72,7 +72,7 @@ def menu_gondola (gond: Gondola, carrito:Carrito, inventario:Inventario):
         codigos_unicos = list(gond.dic.keys())
 
         # Validamos que el número ingresado corresponda a un producto de la lista
-        if not opcion.isdigit() or not (1 <= float(opcion) <= len(codigos_unicos)):
+        if not opcion.isdigit() or not (1 <= int(opcion) <= len(codigos_unicos)):
             print("✗ Opción inválida. Intente de nuevo.")
             continue
 
@@ -106,11 +106,12 @@ def menu_gondola (gond: Gondola, carrito:Carrito, inventario:Inventario):
             if inventario.verificar_stock(gond, prod_elegido): # Adapta este método si requiere cantidad
 
                 if gond.dic.get(prod_elegido.codigo_barras, 0) >= cantidad:
-                    # Le pasamos la cantidad float a tu método de carrito si lo admite
-                    carrito.agregar_a_carrito(prod_elegido, gond, cantidad) 
+                    prod_elegido.peso_vendido = cantidad       
+                    prod_elegido.precio_final = prod_elegido.calcular_precio_final() 
+                    carrito.agregar_a_carrito(prod_elegido, gond, cantidad)
                     agregados = cantidad
                 else:
-                    print(f"⚠️ Stock insuficiente. Solo quedan {gond.dic.get(prod_elegido.codigo_barras, 0)} kg.")
+                    print(f"⚠️ Solo quedan {gond.dic.get(prod_elegido.codigo_barras, 0)} kg.")
             else:
                 gond.reponer_inventario(inventario, prod_elegido)
 
@@ -135,25 +136,37 @@ def menu_gondola (gond: Gondola, carrito:Carrito, inventario:Inventario):
             #para productos unitarios (de a uno a la vez)
             
             for _ in range(cantidad):
-                if inventario.verificar_stock(gond, prod_elegido):
-                    if gond.dic.get(prod_elegido.codigo_barras, 0) > 0:
+                stock_actual = gond.dic.get(prod_elegido.codigo_barras, 0)
+    
+                if stock_actual <= 0:
+                    print(f"⚠️ Sin stock. Solicitando reposición...")
+                    gond.reponer_inventario(inventario, prod_elegido)
+                    # verificamos si se repuso
+                    if gond.dic.get(prod_elegido.codigo_barras, 0) <= 0:
+                        print(f"⚠️ No se pudo reponer. Solo se agregaron {agregados} unidades.")
+                        break
+                else:
+        
+                    for i in range (stock_actual):
                         carrito.agregar_a_carrito(prod_elegido, gond)
                         agregados += 1
-                else:
+
                     gond.reponer_inventario(inventario, prod_elegido)
-                    print(f"⚠️ Stock insuficiente en góndola. Solo se agregaron {agregados} unidades.")
-                    break
+                    print(f"Solo se pudieron agregar {agregados} unidades de {cantidad}.")
+                    continue
+
+                carrito.agregar_a_carrito(prod_elegido, gond)
+                agregados += 1
 
             if agregados > 0:
                 unidad_medida = "unidad/es"
                 print(f"\n  ✓ {agregados} {unidad_medida} de '{prod_elegido.nombre}' agregado/s al carrito.")
 
         # preguntar si sigue comprando en esta góndola
+
         seguir = input("  ¿Agregar otro producto de esta góndola? (s/n): ").strip().lower()
-
-        while seguir in ("s"):
-            seguir = input("  ¿Agregar otro producto de esta góndola? (s/n): ").lower().strip()
-
+        if seguir != "s":
+            return   # si dice "n", sale; si dice "s", el while externo repite
 
         
     
@@ -191,8 +204,14 @@ def _confirmar_compra(carrito:Carrito, alm:Almacen ):
     input("\n  Presioná ENTER para continuar...")
 
 
-def eliminar_del_carrito(c1:Carrito, alm:Almacen):
+def eliminar_del_carrito(c1:Carrito, alm:Almacen, gondolas:list):
     
+    def _buscar_gondola(producto):
+        for g in gondolas:
+            if producto.codigo_barras in g.dic:
+                return g
+        return None
+
     productos_eliminados:list[Producto]=[]
 
     while True:
@@ -200,14 +219,11 @@ def eliminar_del_carrito(c1:Carrito, alm:Almacen):
             print("\n  El carrito está vacío.")
             a= input("  Presioná ENTER para volver...")
 
-            if a:
-                print("  ✗ Opción inválida.")
-            continue
- 
-            return
+            return productos_eliminados
  
         # agrupar por código para mostrar sin repetir
         resumen = {}
+
         for prod in c1.list_prod:
             cod = prod.codigo_barras
             if cod not in resumen:
@@ -237,6 +253,16 @@ def eliminar_del_carrito(c1:Carrito, alm:Almacen):
         cod_elegido, datos = items[int(opcion) - 1]
         prod_elegido = datos["prod"]
         cant_actual  = datos["cant"]
+
+        gond = _buscar_gondola(prod_elegido)  # se busca la góndola donde esta el producto
+
+        def _devolver_a_gondola(prod):
+            if gond is None:
+                return
+            if prod.CATEGORIA in ("Carniceria", "Verduleria"):
+                gond.aumentar_gondola(prod.codigo_barras, prod.peso_vendido)
+            else:
+                gond.aumentar_gondola(prod.codigo_barras)
  
         if cant_actual > 1:
             separador()
@@ -251,13 +277,14 @@ def eliminar_del_carrito(c1:Carrito, alm:Almacen):
                 case "1":
                     c1.list_prod.remove(prod_elegido)
                     productos_eliminados.append(prod_elegido)
-
+                    _devolver_a_gondola(prod_elegido)
                     print(f"  ✓ Se eliminó 1 unidad de '{prod_elegido.nombre}'.")
 
                 case "2":
                     for _ in range(cant_actual):
                         c1.list_prod.remove(prod_elegido)
                         productos_eliminados.append(prod_elegido)
+                        _devolver_a_gondola(prod_elegido)
                     print(f"  ✓ Se eliminaron todas las unidades de '{prod_elegido.nombre}'.")
 
                 case "0" | "":
@@ -267,6 +294,7 @@ def eliminar_del_carrito(c1:Carrito, alm:Almacen):
         else:
             c1.list_prod.remove(prod_elegido)
             productos_eliminados.append(prod_elegido)
+            _devolver_a_gondola(prod_elegido)
             print(f"  ✓ '{prod_elegido.nombre}' eliminado del carrito.")
  
         # Recalcular total
