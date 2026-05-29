@@ -131,11 +131,37 @@ GONDOLAS_MENU = {
     "6": g6,
 }
 
+
+# ---------------- PROVEEDORES --------------------------------
+prov1=Proveedor("oreo", "ac1", "Galletitas", "151")
+prov2=Proveedor("toddys", "sdvf4", "Galletitas", "15151")
+prov3=Proveedor("gomidas", "ac1", "Golosinas", "1551")
+prov4=Proveedor("Coca-Cola", "ac1", "Bebidas", "151")
+prov5=Proveedor("Sprite", "ac1", "Bebidas", "151")
+prov6=Proveedor("Shampoo", "ac1", "Perfumeria", "151")
+prov7=Proveedor("Desodorante", "ac1", "Pefumeria", "151")
+prov8=Proveedor("Jabon", "ac1", "Perfumeria", "151")
+
+pedido1=Pedido(p13, 15)
+pedido2= Pedido(p14, 50)
+pedido3=Pedido(p15, 15)
+pedido4= Pedido(p16, 50)
+
+
 # ---------------- ALMACEN --------------------------------
 Alm=Almacen()
+Alm.agregar_prov(prov1)
+Alm.agregar_prov(prov2)
+Alm.agregar_prov(prov3)
+Alm.agregar_prov(prov4)
+Alm.agregar_prov(prov5)
+Alm.agregar_prov(prov6)
+Alm.agregar_prov(prov7)
+Alm.agregar_prov(prov8)
 
 # ---------------- INVENTARIO --------------------------------
 inv=Inventario(lista_gons, Alm)
+
 
 #------------------------ ARMO EL CARRITO Y SU PANTALLA -------------------------
 
@@ -182,7 +208,7 @@ while True:
                 # seleccionamos el objeto góndola exacto 
                 gondola_seleccionada = lista_gons[int(b) - 1] #restamos 1 porque el usuario ve de 1 a 6 y Python cuenta desde 0
                 
-                menu_gondola(gondola_seleccionada, c1)
+                menu_gondola(gondola_seleccionada, c1, inv)
                 
             else:
                 print("\n✗ ERROR. Ingrese un número de índice válido.")

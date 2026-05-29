@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from PRODUCTO import *
     from CARRITO import Carrito
-    from prov_ped import *
+    from prov_ped import Proveedor, Pedido
     from GONDOLA import *
 
 import os
@@ -41,6 +41,7 @@ class Almacen:
 
     def precio_final (self, producto:Producto, carrito:Carrito):
         #producto = self.hallar_producto(cod_bar,carrito)
+        self.galles:list = []
 
         cat=producto.CATEGORIA
 
@@ -48,7 +49,6 @@ class Almacen:
 
         cont=0.0
         precio_pasajero=0
-        cont_sinpromo=0
 
         if cat=="Galletitas":
 
@@ -56,24 +56,16 @@ class Almacen:
 
              PROMO_GALLETAS = "2x1"           # 2x1 cualquier marca
 
-             ya_en_carrito=0
 
              if carrito:
-
-                galles=[]
-
-                for item in carrito.list_prod:
-
                     ya_en_carrito += 1
-                    galles.append(item) #agrego las galletitas a una lista auxiliar 
-                    cont+= item.precio #acumulo el precio total
+                    self.galles.append(producto) #agrego las galletitas a una lista auxiliar 
+                    cont+= producto.precio() #acumulo el precio total
 
-                if ya_en_carrito%2==0:
-                    precio_pasajero= cont*(ya_en_carrito/2)
-                    print ("Promocion 2x1 aplicada correctamente")
-                else: 
-                    precio_pasajero= cont*((ya_en_carrito-1)/2)+galles[-1].precio
-                    print ("Promocion 2x1 aplicada correctamente")
+                    if ya_en_carrito%2==0:
+                        precio_pasajero= cont*(ya_en_carrito/2)
+                    else: 
+                        precio_pasajero= cont*((ya_en_carrito-1)/2)+self.galles[-1].precio
         
         elif cat=="Perfumeria":
     
@@ -82,7 +74,6 @@ class Almacen:
             ya_en_carrito = 0
 
             for item in carrito.list_prod:
-
                 if item.CATEGORIA == "Perfumeria":
                     ya_en_carrito += 1
                     cont += item.precio
@@ -108,20 +99,20 @@ class Almacen:
             
             if carrito:
                 for item in carrito.list_prod:
-
                     if (item.CATEGORIA == "Bebidas" and item.marca == prod.marca):
                         ya_en_carrito += 1
+                        cont+=item.precio()
 
 
             # Unidades que aplican descuento (un par)
 
             if ya_en_carrito%2==0:                                                       #si es nro par
-                precio_pasajero=producto.precio*(ya_en_carrito/2)*PROMO_BEBIDAS
+                precio_pasajero=cont*(ya_en_carrito/2)*PROMO_BEBIDAS
 
                 print ("Promocion 30% en la segunda unidad aplicada correctamente")
 
             else: 
-                precio_pasajero=producto.precio*((ya_en_carrito-1)/2)*PROMO_BEBIDAS + producto.precio
+                precio_pasajero=cont*((ya_en_carrito-1)/2)*PROMO_BEBIDAS + producto.precio()
                 print ("Promocion 30% en la segunda unidad aplicada correctamente")
 
             # Si no hay segunda unidad de la misma marca, sin promo
@@ -130,18 +121,16 @@ class Almacen:
 
             #el precio para las demas categorias de productos
 
-            cont_sinpromo+=producto.precio #importante que este contador NO SE INICIALICE EN 0
+            cont_sinpromo+=producto.precio() #importante que este contador NO SE INICIALICE EN 0
 
         total = cont_sinpromo + precio_pasajero
         carrito.total  += total
-
-        return total
 
 
     #---------------------- Generación de Pedidos a un Proveedor externo ---------------------
 
 
-    def realizar_pedido(self, producto: "Producto",gondola: "Gondola") -> int:
+    def realizar_pedido(self, producto: Producto,gondola: Gondola) -> int:
 
         if not self.proveedores:
             print("  ✗ Almacen: sin proveedores registrados.")
@@ -149,10 +138,10 @@ class Almacen:
         
         # Por ahora se usa el primer proveedor --> aquí se podría filtrar por tipo
         prov = self.proveedores[0]
-        pedido = Pedido(producto, gondola.umbral_maximo)
-        return self._realizar_pedido(pedido, prov)
+        pedido1 = Pedido(producto, gondola.umbral_maximo)
+        return self._realizar_pedido(pedido1, prov)
         
-    def _realizar_pedido(self, ped: "Pedido", prov: "Proveedor") -> int:
+    def _realizar_pedido(self, ped: Pedido, prov: Proveedor) -> int:
         #comunicación concreta con el proveedor (uso interno)
         
         prov.recibir_pedido(ped)

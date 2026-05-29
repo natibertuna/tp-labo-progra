@@ -10,8 +10,8 @@ class Pedido:
         Pedido._contador += 1
         self.id_pedido = Pedido._contador
         self.prod = prod
-        self.cantidad = cantidad        # FIX: faltaba guardar la cantidad
-        self.nombre = prod.nombre       # FIX: faltaba este atributo (usado en Proveedor)
+        self.cantidad = cantidad        
+        self.nombre = prod.nombre       
  
     def __str__(self):
         return f"Pedido #{self.id_pedido}: {self.cantidad}x {self.nombre}"

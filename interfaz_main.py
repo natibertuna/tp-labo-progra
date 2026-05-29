@@ -44,7 +44,7 @@ def gondolas (gond_menu: dict[int, Gondola]):
 
 
 
-def menu_gondola (gond: Gondola, carrito:Carrito):
+def menu_gondola (gond: Gondola, carrito:Carrito, inventario:Inventario):
     # lista de productos únicos (sin repetidos)
 
     while True:
@@ -96,11 +96,14 @@ def menu_gondola (gond: Gondola, carrito:Carrito):
         agregados = 0
 
         for _ in range(cantidad):
-            if gond.dic.get(prod_elegido.codigo_barras, 0) > 0:
-                carrito.agregar_a_carrito(prod_elegido, gond)
-                agregados += 1
+
+            if inventario.verificar_stock(gond, prod_elegido):
+
+                    carrito.agregar_a_carrito(prod_elegido, gond)
+                    agregados += 1
+
             else:
-                gond.reponer_inventario(carrito.inventario, prod_elegido)
+                gond.reponer_inventario(inventario, prod_elegido)
                 print(f"Solo se pudieron agregar {_} unidades.")
                 break
 
@@ -109,8 +112,11 @@ def menu_gondola (gond: Gondola, carrito:Carrito):
  
         # preguntar si sigue comprando en esta góndola
         seguir = input("  ¿Agregar otro producto de esta góndola? (s/n): ").strip().lower()
-        if seguir != "s":
+        if seguir != "s" and seguir !="n":
+            print ("Ejila una opcion correcta")
             return
+        
+    
 
 def _confirmar_compra(carrito:Carrito, alm:Almacen ):
     separador("TICKET DE COMPRA")
@@ -133,7 +139,9 @@ def _confirmar_compra(carrito:Carrito, alm:Almacen ):
  
     separador()
     print(f"  {'TOTAL A PAGAR':<30}      ${carrito.total:>10.2f}")
+
     separador()
+
     print("\n  ¡Gracias por su compra en Supermercado Nati-Aylu!")
  
     # Guardar carrito en historial y resetear
@@ -195,7 +203,9 @@ def eliminar_del_carrito(c1:Carrito):
             match sub:
                 case "1":
                     c1.list_prod.remove(prod_elegido)
+
                     print(f"  ✓ Se eliminó 1 unidad de '{prod_elegido.nombre}'.")
+
                 case "2":
                     for _ in range(cant_actual):
                         c1.list_prod.remove(prod_elegido)
@@ -234,7 +244,7 @@ def confirmar_compra(c1:Carrito, alm:Almacen):
     separador()
     print(f"  {'TOTAL A PAGAR':<32}      ${c1.total:>10.2f}")
     separador()
-    print("\n  ¡Gracias por su compra en Supermercado Estrella!")
+    print("\n  ¡Gracias por su compra en Supermercado Nati-Aylu!")
  
     alm.carritos_previos.append(list(c1.list_prod))
     c1.vaciar()

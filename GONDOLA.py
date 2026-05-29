@@ -61,13 +61,19 @@ class Gondola:
                   f"[stock: {stock}]")
     
     def reponer_inventario(self, inv:Inventario ,prodcuto: Producto):
-        inv.verificar_stock(self,prodcuto)
+        inv.reponer_stock(self,prodcuto)
     
     def decrementar_gondola(self, cod):
         if cod in self.dic and self.dic[cod] > 0:
             self.dic[cod] -= 1
             return True
         return False
+    
+    def aumentar_gondola(self, cod):
+        self.dic[cod]+=1
+
+        
+
 
 
 

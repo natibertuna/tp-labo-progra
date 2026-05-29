@@ -13,7 +13,7 @@ import os
 os.system('cls')
 
 class Inventario:
-    def __init__(self, gondolas: list[Gondola], almacen: "Almacen"):
+    def __init__(self, gondolas: list[Gondola], almacen: Almacen):
 
         self.gondolas= gondolas
         self.almacen= almacen
@@ -64,6 +64,7 @@ class Inventario:
          if cantidad_recibida == 0:
                 print("  ✗ No se pudo reabastecer. Intente más tarde.")
                 return
+         
          self.depo[codigo] = self.depo.get(codigo, 0) + cantidad_recibida
     
          

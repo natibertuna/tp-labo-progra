@@ -20,16 +20,15 @@ class PantallaCarrito():
     def mostrar_productos(self):
         #muestra todo lo que hay en el carrito
 
-        for i in self.carrito.list_prod:
-            print ("\n ----------- ELEMENTOS EN EL CARRITO----------------")
+        print ("\n ----------- ELEMENTOS EN EL CARRITO----------------")
 
-            if not self.carrito.list_prod:
-                print ("El carrito se encuentra vacio ")
-            else:
-                for prod in self.carrito.list_prod:
-                    print (f"  - [{prod.codigo_barras}]   [{prod.nombre}] [{prod.marca}] [{prod.codigo_barras}] "
-                           f"  - $[{prod.precio:.2f}] ") 
-                    #imprime todo
+        if not self.carrito.list_prod:
+             print ("El carrito se encuentra vacio ")
+        else:
+            for prod in self.carrito.list_prod:
+                print (f"  - [{prod.codigo_barras}]   [{prod.nombre}] [{prod.marca}] "
+                     f"  - $[{prod.precio:.2f}] ") 
+            #imprime todo
 
     
     def mostrar_total(self):
