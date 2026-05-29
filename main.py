@@ -114,13 +114,14 @@ gol=[p28,p29,p30]
 
 # ---------------- GONDOLA --------------------------------
 g1= Gondola("Galletitas", lista_galletitas,400,13 )
-g2= Gondola("Bebidas", bebidas, 50,5)
-g3=Gondola ("Carniceria", car, 46, 5)
-g4=Gondola("Golosinas", gol, 150, 10)
-g5=Gondola("Lacteos", l1, 400, 10)
+g2= Gondola("Bebidas", bebidas, 500,5)
+g3=Gondola ("Carniceria", car, 4600, 5)
+g4=Gondola("Golosinas", gol, 1500, 10)
+g5=Gondola("Lacteos", l1, 4500, 10)
 g6= Gondola("Perfumeria", perfu, 600, 10)
+g7= Gondola("Verduleria", v1, 100, 12)
 
-lista_gons=[g1,g2,g3,g4,g5,g6]
+lista_gons=[g1,g2,g3,g4,g5,g6, g7]
 
 GONDOLAS_MENU = {
     "1": g1,
@@ -210,6 +211,7 @@ while True:
                 
                 menu_gondola(gondola_seleccionada, c1, inv)
                 
+                
             else:
                 print("\n✗ ERROR. Ingrese un número de índice válido.")
 
@@ -222,7 +224,9 @@ while True:
         case '3':
 
             #eliminar productos del carrito
-            eliminar_del_carrito(c1)
+            
+            lista_removidos=eliminar_del_carrito(c1, Alm)
+            inv.devolver_producto(lista_removidos)
 
         case "4":
             #confirmar la compra y visibiliza el ticket

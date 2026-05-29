@@ -21,7 +21,7 @@ class Producto(ABC):
         return self._precio
 
     @precio.setter
-    def precio(self, nuevo_precio):
+    def precio_nuevo(self, nuevo_precio):
         if nuevo_precio < 0:
             raise ValueError("El precio no puede ser negativo.")
 

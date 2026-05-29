@@ -1,6 +1,11 @@
 
-from PRODUCTO.producto import *
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from PRODUCTO.producto import *
+    from ALMACEN import Almacen
 #creo el objeto pedido 
 
 class Pedido:
@@ -25,10 +30,10 @@ class Proveedor:
         self.tel=telefono
 
     def recibir_pedido(self, pedido: Pedido):
-        print(f"  [PROVEEDOR '{self.nombre}'] Pedido recibido: {pedido}")
+        print(f"  [PROVEEDOR] Pedido recibido: {pedido}")
  
     def confirmar_envio(self, pedido: Pedido) -> int:
-        print(f"  [PROVEEDOR '{self.nombre}'] Envío confirmado — "
+        print(f"  [PROVEEDOR] Envío confirmado — "
               f"Pedido #{pedido.id_pedido}: {pedido.cantidad}x {pedido.nombre}")
         return pedido.cantidad
     

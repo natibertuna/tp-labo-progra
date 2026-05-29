@@ -33,7 +33,7 @@ class Inventario:
             else:
                  gondola.dic[producto.codigo_barras]=1
 
-            print(f" '{producto.nombre}' agregado a la góndola {gondola.tipo}.")
+            #print(f" '{producto.nombre}' agregado a la góndola {gondola.tipo}.")
 
     def verificar_stock(self, gondola:Gondola, producto:Producto):
 
@@ -44,7 +44,7 @@ class Inventario:
              self.reponer_stock(gondola,producto)
              print("Intente nuevamente mas tarde")
         elif a > 0:
-            return
+            return True
 
     
     def reponer_stock(self, gondola:Gondola, producto:Producto):  #reemplaza a DEPOSITO
@@ -78,6 +78,12 @@ class Inventario:
  
          print("Gondola actualizada")
 
+    def devolver_producto(self, lista_productos:list[Producto]):
+         for i in lista_productos:
+              for j in self.gondolas:
+                   if i.CATEGORIA==j.tipo:
+                        self.agregar_producto(j,i)
+         
 
 
         
