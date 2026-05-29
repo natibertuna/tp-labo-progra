@@ -12,6 +12,7 @@ from PRODUCTO.verduleria import Verduleria
 from PRODUCTO.perfumeria import *
 from PRODUCTO.lacteos import *
 from PRODUCTO.golosinas import *
+from PRODUCTO.facturas import *
 
 #importo las funciones necesarias1
 
@@ -56,12 +57,13 @@ bebidas=[p4,p5,p6,p7,p8,p31, p32, p33]
 
 #---------------------------- CARNICERIA --------------------------
 
-p9 = Carniceria("Vacío", "C001", "Swift", 9500, "Vacuno", 2.5)
-p10 = Carniceria("Asado", "C002", "Coto", 8700, "Vacuno", 3.0)
-p11 = Carniceria("Chorizo", "C003", "Paladini", 3200, None, None)
-p24 = Carniceria("Morcilla", "C004", "Paladini", 2800, None, None)
+c1 = Carniceria("Asado", 3001, "La Hacienda", 12000, "Vacuno", 1.5)
+c2 = Carniceria("Costillitas", 3002, "La Hacienda", 10000, "Cerdo", 1.2)
+c3 = Carniceria("Pechito de cerdo", 3003, "Swift", 9500, "Cerdo", 1.0)
+c4 = Carniceria("Chorizo", 3004, "Paladini", 800, None, None)
+c5 = Carniceria("Morcilla", 3005, "Paladini", 700, None, None)
 
-car=[p9,p10,p11,p24]
+car=[c1,c2,c3,c4,c5]
 
 
 #----------------------- GALLETITAS ------------------------------
@@ -98,9 +100,22 @@ l1=[p21,p22, p23]
 
 # ------------------------ PANADERIA -------------------------------
 
+pan1 = Panaderia("Pan lactal blanco", 2001, "Bimbo", 2500, "Lactal")
+pan2 = Panaderia("Pan de hamburguesa", 2002, "Fargo", 1800, "Hamburguesa")
+pan3 = Panaderia("Pan pebete", 2003, "Fargo", 1500, "Pebete")
+pan4 = Panaderia("Pan integral", 2004, "Bimbo", 2800, "Integral")
+pan5 = Panaderia("Pan de molde", 2005, "Lactal", 2300, "Molde")
 
+lista_panaderia=[pan1, pan2, pan3, pan4, pan5]
 
+#----------------------- FACTURAS ----------------------------------
+f1 = Factura("Medialuna de manteca", 1001, "La Panadería", 500, "Medialuna")
+f2 = Factura("Vigilante", 1002, "La Panadería", 650, "Vigilante")
+f3 = Factura("Torta negra", 1003, "Dulce Hogar", 800, "Torta Negra")
+f4 = Factura("Cañoncito de dulce de leche", 1004, "Dulce Hogar", 900, "Cañoncito")
+f5 = Factura("Bola de fraile", 1005, "Panificados SRL", 750, "Bola de Fraile")
 
+list_facturas=[f1,f2,f3,f4,f5]
 
 
 #------------------------- GOLOSINAS ---------------------------------
@@ -113,15 +128,17 @@ gol=[p28,p29,p30]
 
 
 # ---------------- GONDOLA --------------------------------
-g1= Gondola("Galletitas", lista_galletitas,400,13 )
+g1= Gondola("Galletitas", lista_galletitas,400,3 )
 g2= Gondola("Bebidas", bebidas, 500,5)
 g3=Gondola ("Carniceria", car, 4600, 5)
 g4=Gondola("Golosinas", gol, 1500, 10)
 g5=Gondola("Lacteos", l1, 4500, 10)
 g6= Gondola("Perfumeria", perfu, 600, 10)
-g7= Gondola("Verduleria", v1, 100, 12)
+g7= Gondola("Verduleria", v1, 100, 2)
+g8= Gondola("Panaderia", lista_panaderia, 450, 4)
+g9= Gondola("Facturas", list_facturas, 450, 2)
 
-lista_gons=[g1,g2,g3,g4,g5,g6, g7]
+lista_gons=[g1,g2,g3,g4,g5,g6,g7, g8, g9]
 
 GONDOLAS_MENU = {
     "1": g1,

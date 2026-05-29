@@ -84,50 +84,76 @@ def menu_gondola (gond: Gondola, carrito:Carrito, inventario:Inventario):
             continue
 
         # preguntamos cantidad
-        if gond.tipo=="Carniceria":
-            cant_str= input(f"¿Cuántos kilos de '{prod_elegido.nombre}' desea agregar?:   ").strip()
-            if not cant_str.isdigit():
-                print("Cantidad inválida.")
-                return
-            cantidad = float(cant_str)
+        if gond.tipo=="Carniceria" or gond.tipo=="Verduleria":
+    
+            cant_str = input(f"¿Cuántos kilos de '{prod_elegido.nombre}' desea agregar? (Ej: 1.5): ").strip()
+            # reemplazamos la coma por punto por si el usuario escribe "1,5"
+            cant_str = cant_str.replace(",", ".")
+            
+            # Validación para números flotantes válidos
+            try:
+                cantidad = float(cant_str)
+                if cantidad <= 0:
+                    raise ValueError
+            except ValueError:
+                print("✗ Cantidad de kilos inválida. Ingrese un número mayor a 0.")
+                continue
+
+            agregados = 0
+        
+            # Si es por peso, verificamos el stock y restamos el float directamente
+
+            if inventario.verificar_stock(gond, prod_elegido): # Adapta este método si requiere cantidad
+
+                if gond.dic.get(prod_elegido.codigo_barras, 0) >= cantidad:
+                    # Le pasamos la cantidad float a tu método de carrito si lo admite
+                    carrito.agregar_a_carrito(prod_elegido, gond, cantidad) 
+                    agregados = cantidad
+                else:
+                    print(f"⚠️ Stock insuficiente. Solo quedan {gond.dic.get(prod_elegido.codigo_barras, 0)} kg.")
+            else:
+                gond.reponer_inventario(inventario, prod_elegido)
+
+
+            if agregados > 0:
+                unidad_medida = "kg"
+                print(f"\n  ✓ {agregados} {unidad_medida} de '{prod_elegido.nombre}' agregado/s al carrito.")
+
 
         else:
-            cant_str = input(f"¿Cuántas unidades de '{prod_elegido.nombre}' desea agregar?:   ").strip()
+            cant_str = input(f"¿Cuántas unidades de '{prod_elegido.nombre}' desea agregar?: ").strip()
+            
+            # Validación tradicional para números enteros
             if not cant_str.isdigit() or int(cant_str) < 1:
-                print("Cantidad inválida.")
-                return
+                print("✗ Cantidad de unidades inválida.")
+                continue
             cantidad = int(cant_str)
 
-        # agregamos al carrito tantas veces como el usuario decida  --> pero de a un producto a la vez
+            # agregamos al carrito tantas veces como el usuario decida  --> pero de a un producto a la vez
+            agregados = 0
         
-        agregados = 0
-
-        stock = gond.dic[cod_elegido]
-        if cantidad <= stock:
+            #para productos unitarios (de a uno a la vez)
+            
             for _ in range(cantidad):
-                if inventario.verificar_stock(gond, prod_elegido)== True:
-                    carrito.agregar_a_carrito(prod_elegido, gond)
-                    agregados += 1
+                if inventario.verificar_stock(gond, prod_elegido):
+                    if gond.dic.get(prod_elegido.codigo_barras, 0) > 0:
+                        carrito.agregar_a_carrito(prod_elegido, gond)
+                        agregados += 1
+                else:
+                    gond.reponer_inventario(inventario, prod_elegido)
+                    print(f"⚠️ Stock insuficiente en góndola. Solo se agregaron {agregados} unidades.")
+                    break
 
-        else:
+            if agregados > 0:
+                unidad_medida = "unidad/es"
+                print(f"\n  ✓ {agregados} {unidad_medida} de '{prod_elegido.nombre}' agregado/s al carrito.")
 
-            for i in range (stock):
-                 carrito.agregar_a_carrito(prod_elegido, gond)
-                 agregados += 1
-
-            gond.reponer_inventario(inventario, prod_elegido)
-            print(f"Solo se pudieron agregar {agregados} unidades de {cantidad}.")
-            continue
-
-
-        if agregados > 0:
-            print(f"\n  ✓ {agregados} x '{prod_elegido.nombre}' agregado/s al carrito.")
- 
         # preguntar si sigue comprando en esta góndola
         seguir = input("  ¿Agregar otro producto de esta góndola? (s/n): ").strip().lower()
 
-        while seguir not in ("s", "n"):
+        while seguir in ("s"):
             seguir = input("  ¿Agregar otro producto de esta góndola? (s/n): ").lower().strip()
+
 
         
     
