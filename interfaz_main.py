@@ -67,7 +67,7 @@ def menu_gondola (gond: Gondola, carrito:Carrito):
             print("\nVolviendo al menú principal...")
             return
 
-        codigos_unicos = list(gond.dic.keys())
+        codigos_unicos = [p.codigo_barras for p in gond.productos]
 
         # Validamos que el número ingresado corresponda a un producto de la lista
         if not opcion.isdigit() or not (1 <= int(opcion) <= len(codigos_unicos)):
@@ -77,6 +77,9 @@ def menu_gondola (gond: Gondola, carrito:Carrito):
         # Buscamos el producto real
         cod_elegido = codigos_unicos[int(opcion) - 1]
         prod_elegido = gond.buscar_producto(cod_elegido)
+        if prod_elegido is None:
+            print("producto no encontrado")
+            continue
 
         # preguntamos cantidad
 
@@ -97,7 +100,8 @@ def menu_gondola (gond: Gondola, carrito:Carrito):
                 carrito.agregar_a_carrito(prod_elegido, gond)
                 agregados += 1
             else:
-                print(f"Solo se pudieron agregar {_ } unidades (sin más stock).")
+                gond.reponer_inventario(carrito.inventario, prod_elegido)
+                print(f"Solo se pudieron agregar {_} unidades.")
                 break
 
         if agregados > 0:
@@ -161,7 +165,7 @@ def eliminar_del_carrito(c1:Carrito):
 
         for i, (cod, datos) in enumerate(items, start=1):
             p = datos["prod"]
-            print(f"  {i}) {p.nombre} ({p.marca})  x{datos['cant']}  - ${p.precio_final:.2f} c/u")
+            print(f"  {i}) {p.nombre} ({p.marca})  x{datos['cant']}  - ${p.precio:.2f} c/u")
         print(f"\n  0) Volver sin eliminar")
 
         separador()
@@ -205,7 +209,7 @@ def eliminar_del_carrito(c1:Carrito):
             print(f"  ✓ '{prod_elegido.nombre}' eliminado del carrito.")
  
         # Recalcular total
-        c1.total = sum(p.precio_final for p in c1.list_prod)
+        c1.total = sum(p.precio for p in c1.list_prod)
  
 def confirmar_compra(c1:Carrito, alm:Almacen):
     separador("TICKET DE COMPRA")

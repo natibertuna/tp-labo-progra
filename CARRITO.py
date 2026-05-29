@@ -69,7 +69,7 @@ class Carrito:
                 self.list_prod.append(producto)   #lo agrego a mi carrito
 
                 #self.almacen.precio_final(producto.codigo_barras, self)       
-                self.total = self.almacen.precio_final(producto, self) #llamo a la funcion de almacen DE PRECIO FINAL 
+                self.total += self.almacen.precio_final(producto,self) #llamo a la funcion de almacen DE PRECIO FINAL 
 
             elif gondola.dic[producto.codigo_barras] - 1 < 0:
                 print("No hay stock disponible. Vuelva a intentarlo mas tarde")

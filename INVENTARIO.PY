@@ -53,25 +53,27 @@ class Inventario:
          # Si la reserva está vacía, delega el pedido a Almacen y luego repone
          
          codigo= producto.codigo_barras  #extraigo el codigo de barras
-         en_reserva = self.reserva.get(codigo, 0) #me creo la reserva de los productos, asi elimino la clase deposito
+         en_reserva = self.depo.get(codigo, 0) #me creo la reserva de los productos, asi elimino la clase deposito
+ 
+         cantidad_recibida=0
 
          if en_reserva==0: #significa que no hay stock en depo
              print(f"  ⚠ Reserva vacía para '{producto.nombre}. \n Solicitando reabastecimiento a Almacen…")
-             cantidad_recibida = self.almacen.solicitar_reabastecimiento(producto, gondola)
+             cantidad_recibida = self.almacen.realizar_pedido(producto, gondola)
          
          if cantidad_recibida == 0:
                 print("  ✗ No se pudo reabastecer. Intente más tarde.")
                 return
-         self.reserva[codigo] = self.reserva.get(codigo, 0) + cantidad_recibida
+         self.depo[codigo] = self.depo.get(codigo, 0) + cantidad_recibida
     
          
          # mover unidades de reserva a la góndola hasta llenar el umbral
 
-         a_reponer = min(self.reserva[codigo], gondola.umbral_maximo)
+         a_reponer = min(self.depo[codigo], gondola.umbral_maximo)
          for _ in range(a_reponer):
             self.agregar_producto(gondola, producto)
 
-         self.reserva[codigo] -= a_reponer
+         self.depo[codigo] -= a_reponer
  
          print("Gondola actualizada")
 

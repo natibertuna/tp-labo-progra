@@ -64,13 +64,9 @@ class Gondola:
         inv.verificar_stock(self,prodcuto)
     
     def decrementar_gondola(self, cod):
-        prod=self.buscar_producto(cod)
-
-        if prod and self.dic.get(cod, 0) > 0:
+        if cod in self.dic and self.dic[cod] > 0:
             self.dic[cod] -= 1
-            self.productos.remove(prod)
             return True
-        
         return False
 
 

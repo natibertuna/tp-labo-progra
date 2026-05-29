@@ -13,7 +13,8 @@ from PRODUCTO.perfumeria import *
 from PRODUCTO.lacteos import *
 from PRODUCTO.golosinas import *
 
-#importo las funciones necesarias
+#importo las funciones necesarias1
+
 
 from CARRITO import *
 from ALMACEN import *
@@ -113,7 +114,7 @@ gol=[p28,p29,p30]
 
 # ---------------- GONDOLA --------------------------------
 g1= Gondola("Galletitas", lista_galletitas,400,13 )
-g2= Gondola("Bedidas", bebidas, 50,5)
+g2= Gondola("Bebidas", bebidas, 50,5)
 g3=Gondola ("Carniceria", car, 46, 5)
 g4=Gondola("Golosinas", gol, 150, 10)
 g5=Gondola("Lacteos", l1, 400, 10)
@@ -215,6 +216,5 @@ while True:
 
 
     
-
 
 

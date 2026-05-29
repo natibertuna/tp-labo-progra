@@ -20,17 +20,6 @@ class Almacen:
        self.proveedores :list= []
     
 
-    def hallar_producto(self, cod, Gondolas:list):  #funcion para buscar un producto en TODO el almcen
-
-        for gondola in Gondolas:
-            for producto in gondola.productos:
-
-                if producto.codigo_barras==cod: #encontramos el producto 
-                    #me devuelve el producto 
-                    print("Producto encontrado: ", producto.nombre)
-                    return producto
-        return None
-
     #-------------------- Determinación de Precios ---------------------------
 
 
@@ -50,8 +39,8 @@ class Almacen:
     #------------------ Cálculo de Promociones-----------------------
 
 
-    def precio_final (self, cod_bar:str, carrito:Carrito):
-        producto = self.hallar_producto(cod_bar,carrito)
+    def precio_final (self, producto:Producto, carrito:Carrito):
+        #producto = self.hallar_producto(cod_bar,carrito)
 
         cat=producto.CATEGORIA
 
@@ -59,6 +48,7 @@ class Almacen:
 
         cont=0.0
         precio_pasajero=0
+        cont_sinpromo=0
 
         if cat=="Galletitas":
 
@@ -76,32 +66,34 @@ class Almacen:
 
                     ya_en_carrito += 1
                     galles.append(item) #agrego las galletitas a una lista auxiliar 
-                    cont+= carrito.list_prod.prec[item] #acumulo el precio total
+                    cont+= item.precio #acumulo el precio total
 
                 if ya_en_carrito%2==0:
-                    precio_pasajero=cont*(ya_en_carrito/2)
+                    precio_pasajero= cont*(ya_en_carrito/2)
                     print ("Promocion 2x1 aplicada correctamente")
                 else: 
-                    precio_pasajero=cont*((ya_en_carrito-1)/2) + galles[-1].precio
+                    precio_pasajero= cont*((ya_en_carrito-1)/2)+galles[-1].precio
                     print ("Promocion 2x1 aplicada correctamente")
         
         elif cat=="Perfumeria":
+    
+            PROMO_PERFUMERIA = 0.50
 
-            PROMO_PERFUMERIA = 0.50          # 50% descuento cualquier producto
+            ya_en_carrito = 0
 
-            ya_en_carrito=0
+            for item in carrito.list_prod:
 
-            for item in self.carrito.items:
-                ya_en_carrito += 1 #acumulo la cantidad de productos en el carrito
-                cont+=self.determinar_precio(cod_bar) #acumulo los precios
+                if item.CATEGORIA == "Perfumeria":
+                    ya_en_carrito += 1
+                    cont += item.precio
 
-            precio_pasajero=cont*ya_en_carrito*PROMO_PERFUMERIA
+            precio_pasajero = cont * PROMO_PERFUMERIA
 
-            print ("Promocion 50% aplicada Correctamente")
+            print("Promocion 50% aplicada Correctamente")
 
         elif cat=="Bebidas":
 
-            PROMO_BEBIDAS  = 1.7            # 30% descuento segunda unidad misma marca
+            PROMO_BEBIDAS  = 1.7          # 30% descuento segunda unidad misma marca
 
 
             #bebidas: 30% en la seg unidad
@@ -112,10 +104,11 @@ class Almacen:
             # Contar unidades de esta MARCA ya en el carrito
             ya_en_carrito = 0
 
-            prod=self.hallar_producto(cod_bar)
+            prod=producto
             
             if carrito:
-                for item in carrito.items:
+                for item in carrito.list_prod:
+
                     if (item.CATEGORIA == "Bebidas" and item.marca == prod.marca):
                         ya_en_carrito += 1
 
@@ -137,10 +130,12 @@ class Almacen:
 
             #el precio para las demas categorias de productos
 
-            cont_sinpromo+=self.determinar_precio(cod_bar) #importante que este contador NO SE INICIALICE EN 0
+            cont_sinpromo+=producto.precio #importante que este contador NO SE INICIALICE EN 0
 
-        
-        carrito.total = cont_sinpromo + precio_pasajero
+        total = cont_sinpromo + precio_pasajero
+        carrito.total  += total
+
+        return total
 
 
     #---------------------- Generación de Pedidos a un Proveedor externo ---------------------
