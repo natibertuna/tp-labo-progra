@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from PRODUCTO.producto import Producto
 
 if TYPE_CHECKING:
-    from INVENTARIO import *
+    from inventario import *
 
 import os
 os.system('cls')
@@ -44,28 +44,37 @@ class Gondola:
 
     def mostrar_productos(self):
         print(f"Góndola: {self.tipo}")
-        
-        if not self.dic:
-            print("No hay productos disponibles.")
+
+        if not self.productos:
+            print("No hay productos disponible.")
             return
+        
+        vistos: dict[str, Producto] = {} #evito imprimir repetidos
+
+        for p in self.productos:
+            if p.codigo_barras not in vistos:
+                vistos[p.codigo_barras] = p
  
-        for i, (cod, stock) in enumerate(self.dic.items(), start=1):
-            prod = self.buscar_producto(cod)
-            if prod is None:
-                continue
-            estado = f"[stock: {stock}]" if stock > 0 else "[sin stock]"
-            print(f"  {i}) {prod.nombre} ({prod.marca}) - ${prod.precio:.2f}  {estado}")
+        for i, p in enumerate(vistos.values(), start=1):
+            stock = self.dic.get(p.codigo_barras, 0)
+            print(f"  {i}) {p.nombre} ({p.marca}) - ${p.precio:.2f}  "
+                  f"[stock: {stock}]")
     
     def reponer_inventario(self, inv:Inventario ,prodcuto: Producto):
         inv.reponer_stock(self,prodcuto)
     
-    def decrementar_gondola(self, cod, cantidad=1):
+    def decrementar_gondola(self, cod):
 
         if cod in self.dic and self.dic[cod] > 0:
-            
-            self.dic[cod] -= cantidad
-            self.dic[cod] = round(self.dic[cod], 3)
-            return True
+
+            if self.tipo in ['Carniceria', 'Verduleria']:
+                a=float(input('Cuanto desea agregar?: '))
+                self.dic[cod]-=a
+                return True
+
+            else:
+                self.dic[cod] -= 1
+                return True
         return False
     
     def aumentar_gondola(self, cod):

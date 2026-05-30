@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from PRODUCTO.producto import *
-    from ALMACEN import Almacen
+    from almacen import Almacen
 #creo el objeto pedido 
 
 class Pedido:

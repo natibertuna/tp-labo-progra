@@ -15,6 +15,8 @@ class Producto(ABC):
         self.nombre = nombre
         self.marca = marca
         self.codigo_barras = codigo
+        self.cant=0
+        self.peso_vendido:float = 0.0
 
     @property
     def precio(self):
@@ -33,3 +35,4 @@ class Producto(ABC):
     @abstractmethod
     def calcular_precio_final(self):
         pass
+   

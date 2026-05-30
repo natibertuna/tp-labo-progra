@@ -1,7 +1,7 @@
 
 #SU UNICA FUNCION ES PRINTEAR LAS COSAS DE C/ GONDOLA 
 
-from GONDOLA import *
+from gondola import *
 import os
 os.system('cls')
 

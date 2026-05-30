@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from PRODUCTO import *
-    from CARRITO import Carrito
-    from GONDOLA import *
+    from carrito import Carrito
+    from gondola import *
 
 import os
 os.system('cls')
@@ -40,7 +40,7 @@ class Almacen:
 
     def precio_final (self, carrito:Carrito):
         #producto = self.hallar_producto(cod_bar,carrito)
-        self.galles:list[Producto] = []
+        galles:list[Producto] = []
 
         bebidas:list[Producto] = []
        
@@ -68,7 +68,7 @@ class Almacen:
         cc4=0
 
         cont2=0
-       
+        contflotante=0
 
         for item in lista_c:
             if item.CATEGORIA=="Galletitas":
@@ -79,17 +79,17 @@ class Almacen:
 
                 ya_en_carrito += 1
                 cont=0
-                self.galles.append(item) #agrego las galletitas a una lista auxiliar 
+                galles.append(item) #agrego las galletitas a una lista auxiliar 
                     
                 if ya_en_carrito%2==0:
                     for i in range(0,(ya_en_carrito-1),2):
                         
-                        cont+= max(self.galles[i].calcular_precio_final(), self.galles[i+1].calcular_precio_final())
+                        cont+= max(galles[i].calcular_precio_final(), galles[i+1].calcular_precio_final())
                 else:
                     for i in range(0,(ya_en_carrito-2),2):
                         
-                        cont+= max(self.galles[i].calcular_precio_final(), self.galles[i+1].calcular_precio_final())
-                    cont+=self.galles[-1].calcular_precio_final()
+                        cont+= max(galles[i].calcular_precio_final(), galles[i+1].calcular_precio_final())
+                    cont+=galles[-1].calcular_precio_final()
 
                 precio_pasajero= cont
         
@@ -101,6 +101,9 @@ class Almacen:
                 cont2 += item.calcular_precio_final()
 
                 precio_pas2 = cont2 * PROMO_PERFUMERIA
+            elif item.CATEGORIA=="Carniceria" or item.CATEGORIA=="Verduleria":
+                
+                contflotante+=item.calcular_precio_final()
 
             elif item.CATEGORIA =="Bebidas":
 
@@ -177,7 +180,7 @@ class Almacen:
 
                 cont_sinpromo+=item.calcular_precio_final() #importante que este contador NO SE INICIALICE EN 0
 
-        total = cont_sinpromo + precio_pasajero + precio_pasajero3+precio_pas2
+        total = cont_sinpromo + precio_pasajero + precio_pasajero3+precio_pas2+contflotante
         carrito.total=total
 
 

@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from PRODUCTO.producto import *
-    from GONDOLA import *
-    from ALMACEN import Almacen
-    from INVENTARIO import Inventario
-    from PANTALLA_CARRITO import *
+    from gondola import *
+    from almacen import Almacen
+    from inventario import Inventario
+    from pantalla_carrito import *
 
 import os
 os.system('cls')
@@ -53,7 +53,7 @@ class Carrito:
     #---------------Monitoreo y Reposición en Compra----------------------
 
 
-    def agregar_a_carrito (self, producto:Producto, gondola:Gondola, cantidad=1):
+    def agregar_a_carrito (self, producto:Producto, gondola:Gondola):
         #agrego al carrito de a uno
 
         if producto.codigo_barras not in gondola.dic:
@@ -63,13 +63,15 @@ class Carrito:
         #bsuco los productos en base al diccionario que creamos en la clase Gondola
 
         else:
-            if gondola.dic[producto.codigo_barras]> cantidad: 
+            if gondola.dic[producto.codigo_barras]> 0: #si quiero una cant de productos que no me infiera con el umbral minimo
                 
-                gondola.decrementar_gondola(producto.codigo_barras, cantidad)
-                self.list_prod.append(producto)   #lo agrego a mi carrito      
+                gondola.decrementar_gondola(producto.codigo_barras)
+                self.list_prod.append(producto)   #lo agrego a mi carrito
+
+                #self.almacen.precio_final(producto.codigo_barras, self)       
                 self.almacen.precio_final(self) #llamo a la funcion de almacen DE PRECIO FINAL 
 
-            elif gondola.dic[producto.codigo_barras]< cantidad:
+            elif gondola.dic[producto.codigo_barras]< 0:
                 print("No hay stock disponible. Vuelva a intentarlo mas tarde")
                 gondola.reponer_inventario(self.inventario, producto)
 
@@ -77,6 +79,10 @@ class Carrito:
 
 
 
+
+   
+
+        
 
    
 

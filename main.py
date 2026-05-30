@@ -17,13 +17,13 @@ from PRODUCTO.facturas import *
 #importo las funciones necesarias1
 
 
-from CARRITO import *
-from ALMACEN import *
-from GONDOLA import *
-from INVENTARIO import *
+from carrito import *
+from almacen import *
+from gondola import *
+from inventario import *
 from prov_ped import *
-from PANTALLA_CARRITO import *
-from TABLET import *
+from pantalla_carrito import *
+from tablet import *
 
 
 import os
@@ -34,25 +34,41 @@ os.system('cls')
 
 # ----------------------------- VERDULERIA -----------------------
 
-p1 = Verduleria("Zanahoria "," V001","Genérica", precio_por_unidad=1200 ,peso_vendido=4.5)
-p2 = Verduleria(nombre="Cebolla", codigo="V002", marca="Genérica", precio_por_unidad=980, peso_vendido=12.2)
-p3 = Verduleria(nombre="Lechuga", codigo="V003", marca="Huerta Orgánica", precio_por_unidad=2500, peso_vendido=2.8)
+ve1 = Verduleria("Zanahoria "," V001","Genérica", 1200 ,4.5)
+v2 = Verduleria("Cebolla", "V002", "Genérica", 980, 12.2)
+v3 = Verduleria("Lechuga", "V003", "Huerta Orgánica", 2500, 2.8)
+v4 = Verduleria("Zanahoria "," V001","Genérica", 1200 ,4.5)
+v5 = Verduleria("Cebolla", "V002", "Genérica", 980, 12.2)
+v6 = Verduleria("Lechuga", "V003", "Huerta Orgánica", 2500, 2.8)
+v7 = Verduleria("Zanahoria "," V001","Genérica", 1200 ,4.5)
+v8 = Verduleria("Cebolla", "V002", "Genérica", 980, 12.2)
+v9 = Verduleria("Lechuga", "V003", "Huerta Orgánica", 2500, 2.8)
+v10 = Verduleria("Zanahoria "," V001","Genérica", 1200 ,4.5)
+v11 = Verduleria("Cebolla", "V002", "Genérica", 980, 12.2)
+v12 = Verduleria("Lechuga", "V003", "Huerta Orgánica", 2500, 2.8)
 
-print (p3)
-v1=[p1,p2,p3]
+v1=[ve1, v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12]
 
 # ----------------------------- BEBIDAS----------------------------
 
-p4 = Bebidas("Sprite Lima-Limón", "B001", "Coca-Cola", 3200, 2.25)
-p5 = Bebidas("Fanta Naranja", "B002", "Coca-Cola", 3100, 2.25)
-p6 = Bebidas("Manaos Cola", "B003", "Manaos", 2100, 2.25)
-p7 = Bebidas("Manaos Uva", "B004", "Manaos", 2200, 2.25)
-p8 = Bebidas("Aquarius Pera", "B005", "Coca-Cola", 2800, 1.5)
-p31 = Bebidas("Aquarius Naranja", "B006", "Coca-Cola", 2800, 1.5)
-p32 = Bebidas("Agua Mineral", "B007", "Villavicencio", 1700, 2)
-p33 = Bebidas("Cunnington Cola", "B008", "Cunnington", 1900, 2.25)
+b1 = Bebidas("Sprite Lima-Limón", "B001", "Coca-Cola", 3200, 2.25)
+b2 = Bebidas("Fanta Naranja", "B002", "Coca-Cola", 3100, 2.25)
+b3 = Bebidas("Manaos Cola", "B003", "Manaos", 2100, 2.25)
+b4 = Bebidas("Manaos Uva", "B004", "Manaos", 2200, 2.25)
+b5 = Bebidas("Aquarius Pera", "B005", "Coca-Cola", 2800, 1.5)
+b6 = Bebidas("Aquarius Naranja", "B006", "Coca-Cola", 2800, 1.5)
+b7 = Bebidas("Agua Mineral", "B007", "Villavicencio", 1700, 2)
+b8 = Bebidas("Cunnington Cola", "B008", "Cunnington", 1900, 2.25)
+b9 = Bebidas("Sprite Lima-Limón", "B001", "Coca-Cola", 3200, 2.25)
+b10 = Bebidas("Fanta Naranja", "B002", "Coca-Cola", 3100, 2.25)
+b11= Bebidas("Manaos Cola", "B003", "Manaos", 2100, 2.25)
+b12= Bebidas("Manaos Uva", "B004", "Manaos", 2200, 2.25)
+b13= Bebidas("Aquarius Pera", "B005", "Coca-Cola", 2800, 1.5)
+b14= Bebidas("Aquarius Naranja", "B006", "Coca-Cola", 2800, 1.5)
+b15= Bebidas("Agua Mineral", "B007", "Villavicencio", 1700, 2)
+b16= Bebidas("Cunnington Cola", "B008", "Cunnington", 1900, 2.25)
 
-bebidas=[p4,p5,p6,p7,p8,p31, p32, p33]
+bebidas=[b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16]
 
 
 #---------------------------- CARNICERIA --------------------------
@@ -67,34 +83,48 @@ car=[c1,c2,c3,c4]
 
 #----------------------- GALLETITAS ------------------------------
 
-p12 = Galletitas("Toddy Chocolatadas", "G001", "Toddy", 2500)
-p13 = Galletitas("Toddy Rellenas", "G002", "Toddy", 2700)
-p14 = Galletitas("Oreo Clásicas", "G003", "Oreo", 3000)
-p15 = Galletitas("Oreo Golden", "G004", "Oreo", 3100)
-p16 = Galletitas("Pitusas", "G005", "Terrabusi", 1800)
-p17 = Galletitas("Vainillas", "G006", "9 de Oro", 2200)
-p25 = Galletitas("Sonrisa Chocolate", "G007", "Bagley", 2000)
-p26 = Galletitas("Sonrisa Frutilla", "G008", "Bagley", 2000)
-p27 = Galletitas("Porteñitas", "G009", "Bagley", 2400)
+ga1 = Galletitas("Toddy Chocolatadas", "G001", "Toddy", 2500)
+ga2 = Galletitas("Toddy Rellenas", "G002", "Toddy", 2700)
+ga3 = Galletitas("Oreo Clásicas", "G003", "Oreo", 3000)
+ga4 = Galletitas("Oreo Golden", "G004", "Oreo", 3100)
+ga5 = Galletitas("Pitusas", "G005", "Terrabusi", 1800)
+ga6 = Galletitas("Vainillas", "G006", "9 de Oro", 2200)
+ga7 = Galletitas("Sonrisa Chocolate", "G007", "Bagley", 2000)
+ga8 = Galletitas("Sonrisa Frutilla", "G008", "Bagley", 2000)
+ga9 = Galletitas("Porteñitas", "G009", "Bagley", 2400)
+ga10 = Galletitas("Toddy Chocolatadas", "G001", "Toddy", 2500)
+ga11 = Galletitas("Toddy Rellenas", "G002", "Toddy", 2700)
+ga12 = Galletitas("Oreo Clásicas", "G003", "Oreo", 3000)
+ga13= Galletitas("Oreo Golden", "G004", "Oreo", 3100)
+ga14= Galletitas("Pitusas", "G005", "Terrabusi", 1800)
+ga15= Galletitas("Vainillas", "G006", "9 de Oro", 2200)
+ga16= Galletitas("Sonrisa Chocolate", "G007", "Bagley", 2000)
+ga17= Galletitas("Sonrisa Frutilla", "G008", "Bagley", 2000)
+ga18= Galletitas("Porteñitas", "G009", "Bagley", 2400)
 
-lista_galletitas = [p12, p13, p14, p15, p16, p17,p25, p26, p27]
+lista_galletitas = [ga1,ga2,ga3,ga4,ga5,ga6,ga7,ga8,ga9,ga10,ga11,ga12,ga13,ga14,ga15,ga16,ga17,ga18]
 
 
 #--------------------- PERFUMERIA ----------------------------------- 
 
-p18 = Perfumeria("Shampoo Reparación Total", "PF001", "Elvive", 4800,  "Shampoo")
-p19 = Perfumeria("Desodorante Aerosol", "PF002", "Rexona", 3500, "Desodorante")
-p20 = Perfumeria("Jabón Líquido", "PF003", "Dove", 2900,  "Jabón")
-
-perfu=[p18,p19,p20]
+p1 = Perfumeria("Shampoo Reparación Total", "PF001", "Elvive", 4800,  "Shampoo")
+p2 = Perfumeria("Desodorante Aerosol", "PF002", "Rexona", 3500, "Desodorante")
+p3 = Perfumeria("Jabón Líquido", "PF003", "Dove", 2900,  "Jabón")
+p4 = Perfumeria("Shampoo Reparación Total", "PF001", "Elvive", 4800,  "Shampoo")
+p5 = Perfumeria("Desodorante Aerosol", "PF002", "Rexona", 3500, "Desodorante")
+p6 = Perfumeria("Jabón Líquido", "PF003", "Dove", 2900,  "Jabón")
+perfu=[p1,p2,p3,p4,p5,p6]
 
 # ---------------------- LACTEOS --------------------------------------------
 
-p21 = Lacteo("Leche Entera", "L001", "La Serenísima", 2500, "Leche")
-p22 = Lacteo("Yogur de Frutilla", "L002", "Ser", 1800,"Yogur")
-p23 = Lacteo("Queso Cremoso", "L003", "Casancrem", 4200, "Queso")
+la1 = Lacteo("Leche Entera", "L001", "La Serenísima", 2500, "Leche")
+la2 = Lacteo("Yogur de Frutilla", "L002", "Ser", 1800,"Yogur")
+la3 = Lacteo("Queso Cremoso", "L003", "Casancrem", 4200, "Queso")
+la4 = Lacteo("Leche Entera", "L001", "La Serenísima", 2500, "Leche")
+la5 = Lacteo("Yogur de Frutilla", "L002", "Ser", 1800,"Yogur")
+la6 = Lacteo("Queso Cremoso", "L003", "Casancrem", 4200, "Queso")
 
-l1=[p21,p22, p23]
+l1=[la1,la2,la3,la4,la5,la6]
 
 
 # ------------------------ PANADERIA -------------------------------
@@ -119,11 +149,13 @@ list_facturas=[f1,f2,f3,f4,f5]
 
 #------------------------- GOLOSINAS ---------------------------------
 
-p28 = Golosinas("Gomitas Ácidas", "GO001", "Arcor", 1500, 120)
-p29 = Golosinas("Alfajor Triple", "GO002", "Jorgito", 1800, 70)
-p30 = Golosinas("Chupetín Pop", "GO003", "Topline", 500, 15)
-
-gol=[p28,p29,p30]
+gol1 = Golosinas("Gomitas Ácidas", "GO001", "Arcor", 1500, 120)
+gol2 = Golosinas("Alfajor Triple", "GO002", "Jorgito", 1800, 70)
+gol3 = Golosinas("Chupetín Pop", "GO003", "Topline", 500, 15)
+gol4 = Golosinas("Gomitas Ácidas", "GO001", "Arcor", 1500, 120)
+gol5 = Golosinas("Alfajor Triple", "GO002", "Jorgito", 1800, 70)
+gol6 = Golosinas("Chupetín Pop", "GO003", "Topline", 500, 15)
+gol=[gol1,gol2,gol3,gol4,gol5,gol6]
 
 
 # ---------------- GONDOLA --------------------------------
@@ -159,10 +191,11 @@ prov6=Proveedor("Shampoo", "ac1", "Perfumeria", "151")
 prov7=Proveedor("Desodorante", "ac1", "Pefumeria", "151")
 prov8=Proveedor("Jabon", "ac1", "Perfumeria", "151")
 
-pedido1=Pedido(p13, 15)
-pedido2= Pedido(p14, 50)
-pedido3=Pedido(p15, 15)
-pedido4= Pedido(p16, 50)
+pedido1=Pedido(b2, 15)
+pedido2= Pedido(b3, 50)
+pedido3=Pedido(gol1, 15)
+pedido4= Pedido(b1, 50)
+pedido5=Pedido(gol5,150)
 
 
 # ---------------- ALMACEN --------------------------------
@@ -213,13 +246,14 @@ while True:
             print("\n" +"*" * 60)
             print("   GÓNDOLAS DEL SUPERMERCADO")
             print("*" * 60)
-            # Recorremos la lista para mostrar todas las góndolas dinámicamente
+
+            # se recorre la lista para mostrar todas las góndolas dinámicamente
             for idx, g in enumerate(lista_gons, start=1):
                 print(f"  {idx}) Góndola: {g.tipo.title()}")
             
             b = input("\n¿Qué góndola querés visitar? (inserte índice): ").strip()
 
-            # índice ingresado sea un número dentro del rango de la lista
+            # índice ingresado --> un número dentro del rango de la lista
 
             if b.isdigit() and 1 <= int(b) <= len(lista_gons):
                 # seleccionamos el objeto góndola exacto 

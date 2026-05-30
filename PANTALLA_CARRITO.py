@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 #evito bucles
 
 if TYPE_CHECKING:
-    from CARRITO import Carrito
+    from carrito import Carrito
 import os
 os.system('cls')
 

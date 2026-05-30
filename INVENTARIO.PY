@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 #evito bucles
 
 if TYPE_CHECKING:
-    from ALMACEN import Almacen
-    from GONDOLA import Gondola
+    from almacen import Almacen
+    from gondola import Gondola
     from PRODUCTO.producto import Producto
 
 
@@ -35,16 +35,11 @@ class Inventario:
 
             #print(f" '{producto.nombre}' agregado a la góndola {gondola.tipo}.")
 
-    def verificar_stock(self, gondola:Gondola, producto:Producto):
-
-        a=gondola.dic.get(producto.codigo_barras, 0)
-
-        if a == 0:
-             print("Sin disponibilidad")
-             self.reponer_stock(gondola,producto)
-             print("Intente nuevamente mas tarde")
-        elif a > 0:
-            return True
+    def verificar_stock(self, gondola: Gondola, producto: Producto) -> bool:
+        # SOLO VERIFICA
+        
+        stock_en_gondola = gondola.dic.get(producto.codigo_barras, 0)
+        return stock_en_gondola > 0
 
     
     def reponer_stock(self, gondola:Gondola, producto:Producto):  #reemplaza a DEPOSITO
@@ -64,19 +59,40 @@ class Inventario:
          if cantidad_recibida == 0:
                 print("  ✗ No se pudo reabastecer. Intente más tarde.")
                 return
-         
+          
          self.depo[codigo] = self.depo.get(codigo, 0) + cantidad_recibida
     
+          # mover unidades de reserva a la góndola hasta llenar el umbral
+  
          
-         # mover unidades de reserva a la góndola hasta llenar el umbral
+         es_venta_por_peso = gondola.tipo in ["Carniceria", "Carnicería", "Verduleria", "Verdulería"]
 
-         a_reponer = min(self.depo[codigo], gondola.umbral_maximo)
-         for _ in range(a_reponer):
-            self.agregar_producto(gondola, producto)
+         # Calculamos cuánto falta para llegar al umbral máximo
+         stock_actual = gondola.dic.get(codigo, 0)
+         espacio_libre = gondola.umbral_maximo - stock_actual
 
+         if espacio_libre <= 0:
+          print(f"  La góndola de '{producto.nombre}' ya está llena.")
+          return
+
+         # Lo máximo que podemos pasar es lo que hay en reserva o el espacio libre
+         a_reponer = min(self.depo[codigo], espacio_libre)
+
+         if es_venta_por_peso:
+            gondola.dic[codigo] = stock_actual + a_reponer
+            # Si mantienes la lista de objetos físicos, añadimos solo una instancia de referencia si no existía
+            if producto not in gondola.productos:
+                gondola.productos.append(producto)
+         else:
+            # Para productos unitarios (enteros), usamos int() por seguridad y el bucle tradicional
+            a_reponer_unidades = int(a_reponer)
+            for _ in range(a_reponer_unidades):
+                self.agregar_producto(gondola, producto)
+
+        # Restamos de la reserva lo que movimos a la góndola
          self.depo[codigo] -= a_reponer
  
-         print("Gondola actualizada")
+         print(f"  ✓ Góndola de '{producto.nombre}' actualizada con éxito.")
 
     def devolver_producto(self, lista_productos:list[Producto]):
          for i in lista_productos:
@@ -84,6 +100,9 @@ class Inventario:
                    if i.CATEGORIA==j.tipo:
                         self.agregar_producto(j,i)
          
+
+
+        
 
 
         

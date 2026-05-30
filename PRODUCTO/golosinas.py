@@ -11,5 +11,6 @@ class Golosinas (Producto):
     def calcular_precio_final(self):  # implementa el método abstracto
         return self._precio
         #return self._precio*(self.peso/1000)
+   
 
         
