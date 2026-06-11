@@ -215,7 +215,8 @@ def eliminar_del_carrito(c1:Carrito, alm:Almacen):
         opcion = input("  ¿Qué producto querés eliminar? ").strip()
  
         if opcion == "0" or opcion == "":
-            return
+            print ("Volviendo al menu...")
+            return []
  
         if not opcion.isdigit() or not (1 <= int(opcion) <= len(items)):
             print("  ✗ Opción inválida.")
